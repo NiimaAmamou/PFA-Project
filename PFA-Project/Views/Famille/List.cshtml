@@ -1,0 +1,36 @@
+﻿@model List<Famille>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <p>
+                        <a class="btn btn-primary btn-rounded btn-icon" asp-action="Ajouter" asp-controller="Famille">
+                            <i class="mdi mdi-cart-plus"></i>
+                        </a>
+                    </p>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Id Famille</th>
+                                <th>Libelle</th>
+                                <th>Image</th>
+                            </tr>
+                            @foreach (Famille famille in Model)
+                            {
+                                <tr>
+                                    <td>@famille.Id</td>
+                                    <td>@famille.Libelle</td>
+                                    <td>@famille.image1</td>
+                                </tr>
+                            }
+                        </thead>
+
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
