@@ -1,0 +1,36 @@
+﻿
+@model List<Article>
+<div class="row">
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Id Article</th>
+                            <th>Référence Article</th>
+                            <th>Libellé Article</th>
+                           
+                            <th>Quantité</th>
+                                <th>Unité</th>
+                        </tr>
+                        @foreach (Article art in Model)
+                        {
+                            <tr class="@(art.QteStock<=5?"bg-warning":"")">
+                                <td>@art.IdArticle</td>
+                                <td>@art.RefArticle</td>
+                                <td>@art.LibelleArticle</td>
+                               
+                                <td>@art.QteStock</td>
+                                    <td>@art.Unite</td>
+                            </tr>
+                        }
+                    </thead>
+                </table>
+                  
+</div>
+</div>
+</div>
+</div>
+</div>

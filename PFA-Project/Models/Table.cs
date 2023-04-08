@@ -1,6 +1,15 @@
-﻿namespace PFA_Project.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PFA_Project.Models
 {
     public class Table
     {
+        [Key]
+        public int Id { get; set; }
+        public int NumTable { get; set; }
+        public string Capacite { get; set; }
+        public bool EtatTable { get; set; }
+        public string Description { get; set; }
+
     }
 }
