@@ -5,6 +5,11 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
+                    <p>
+                        <a class="btn btn-primary btn-rounded btn-icon" asp-action="Create" asp-controller="Article">
+                            <i class="mdi mdi-cart-plus"></i>
+                    </a>
+                    </p>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -17,7 +22,7 @@
                         </tr>
                         @foreach (Article art in Model)
                         {
-                            <tr class="@(art.QteStock<=5?"bg-warning":"")">
+                            <tr class="@(art.QteStock<=5?"bg-danger":"")">
                                 <td>@art.IdArticle</td>
                                 <td>@art.RefArticle</td>
                                 <td>@art.LibelleArticle</td>
@@ -27,7 +32,9 @@
                             </tr>
                         }
                     </thead>
+                      
                 </table>
+
                   
 </div>
 </div>

@@ -16,5 +16,22 @@ namespace PFA_Project.Controllers
             List<Article> articles = db.Articles.ToList() ;
             return View(articles);
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Article article)
+        {
+            if(ModelState.IsValid)
+            {
+                db.Articles.Add(article);
+                db.SaveChanges();
+                return RedirectToAction("ListArticles");
+            }
+            return View(article);
+
+        }
+
     }
 }
