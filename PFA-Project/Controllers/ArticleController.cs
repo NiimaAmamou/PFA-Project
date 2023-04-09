@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PFA_Project.Models;
+using System.Reflection.Metadata.Ecma335;
 
 namespace PFA_Project.Controllers
 {
@@ -32,6 +33,22 @@ namespace PFA_Project.Controllers
             return View(article);
 
         }
-
+        public IActionResult Delete(int ?id)
+        {
+          
+            if(id==null)
+            {
+                return RedirectToAction("ListArticles");
+            }
+            var ar = db.Articles.Find(id);
+            if (ar != null)
+            {
+                db.Articles.Remove(ar);
+                db.SaveChanges();
+                return RedirectToAction("ListArticles");
+            }
+            return RedirectToAction("ListArticles");
+        }
+      
     }
 }
