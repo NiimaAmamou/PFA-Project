@@ -47,10 +47,11 @@ namespace PFA_Project.Controllers
             }
             return View();
         }
-        public IActionResult Delete(Table table,int id)
+        public IActionResult Delete(int id)
         {
             Table t = db.Tables.Single(t => t.Id == id);
             db.Remove(t);
+            db.SaveChanges();
             return RedirectToAction("ListTable");
         }
     }
