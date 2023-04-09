@@ -1,0 +1,49 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Table>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <p>
+                        <a class="btn btn-primary btn-rounded btn-icon" asp-action="List" asp-controller="Table">
+                            <i class="mdi mdi-cart-plus"></i>
+                        </a>
+                    </p>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Num Table</th>
+                                <th>Capacite</th>
+
+                                <th>Etat Table</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                            @foreach (Table item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.NumTable</td>
+                                    <td>@item.Capacite</td>
+
+                                    <td>@item.EtatTable</td>
+                                    <td>@item.Description</td>
+                                    <td><a class='btn btn-info btn-xs' asp-controller="Table" asp-action="Update" asp-route-id="@item.Id"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a asp-controller="Table" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a></td>
+                                </tr>
+                            }
+                        </thead>
+
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
