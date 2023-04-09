@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PFA_Project;
 
@@ -11,9 +12,10 @@ using PFA_Project;
 namespace PFA_Project.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230409142038_ModifBase")]
+    partial class ModifBase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,11 +26,11 @@ namespace PFA_Project.Migrations
 
             modelBuilder.Entity("PFA_Project.Models.Article", b =>
                 {
-                    b.Property<int?>("IdArticle")
+                    b.Property<int>("IdArticle")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("IdArticle"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdArticle"), 1L, 1);
 
                     b.Property<string>("LibelleArticle")
                         .HasColumnType("nvarchar(max)");

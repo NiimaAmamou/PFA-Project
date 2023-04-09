@@ -3,24 +3,24 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">
-                    Ajouter une famille</h4>
+                <h4 class="card-title">Modifier une Table</h4>
 
                 <form class="forms-sample" method="post" enctype="multipart/form-data">
+                    >
                             <div asp-validation-summary="All" />
                             <div class="form-group">
-                                <label for="ref">Libelle</label>
+                                <label for="numT">Libelle</label>
                                 <input type="text" class="form-control" asp-for="Libelle" placeholder="Libelle" />
                                 <span asp-validation-for="Libelle"></span>
                             </div>
                             <div class="form-group">
-                                <label for="ref">Image</label>
-                                <input type="file" class="form-control" asp-for="image1">
+                                <label for="cap">Image</label>
+                                <input class="form-control" asp-for="image1" placeholder="Capacite" />
                                 <span asp-validation-for="image1"></span>
                             </div>
                             <div class="template-demo mt-2">
                                 <button type="submit" class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-file-check btn-icon-prepend"></i> Ajouter
+                                    <i class="mdi mdi-file-check btn-icon-prepend"></i> Modifier
                                 </button>
                             </div>
                         </form>

@@ -19,6 +19,7 @@
 
                 <form class="forms-sample" method="post">
                     <div asp-validation-summary="All" />
+                    <input type="hidden" asp-for="IdArticle" />
                     <div class="form-group">
                         <label for="ref">Référence</label>
                         <input type="text" class="form-control" asp-for="RefArticle" placeholder="Référence" />

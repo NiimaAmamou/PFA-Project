@@ -18,17 +18,18 @@
                             </tr>
                             @foreach (Famille famille in Model)
                             {
+                                var path = "~/img/" + famille.Image;
                                 <tr>
                                     <td>@famille.Id</td>
                                     <td>@famille.Libelle</td>
-                                    <td>@famille.image1</td>
+                                    <td><img src="@path" height="200px" width="200px" /></td>
+                                    <td><a class="btn btn-danger" asp-controller="Famille" asp-action="Supprimer" asp-route-id="@famille.Id">Supprimer</a></td>
+                                    <td><a class="btn btn-outline-secondary" asp-controller="Famille" asp-action="Modifier" asp-route-id="@famille.Id">Modifier</a></td>
                                 </tr>
                             }
                         </thead>
 
                     </table>
-
-
                 </div>
             </div>
         </div>
