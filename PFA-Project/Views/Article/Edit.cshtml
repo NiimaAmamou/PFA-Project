@@ -1,0 +1,53 @@
+﻿@model Article
+@{
+    ViewBag.Title = "Modifier Article";
+}
+<div class="page-header">
+    <h3 class="page-title">Modification des Articles</h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Article/ListArticles">Retourner vers la liste</a></li>
+
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+
+
+                <form class="forms-sample" method="post">
+                    <div asp-validation-summary="All" />
+                    <div class="form-group">
+                        <label for="ref">Référence</label>
+                        <input type="text" class="form-control" asp-for="RefArticle" placeholder="Référence" />
+                        <span asp-validation-for="RefArticle"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="ref">Libellé</label>
+                        <input type="text" class="form-control" asp-for="LibelleArticle" placeholder="Libellé" />
+                        <span asp-validation-for="LibelleArticle"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="ref">Quantité</label>
+                        <input type="text" class="form-control" asp-for="QteStock" placeholder="Quantité" />
+                        <span asp-validation-for="QteStock"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="ref">Unité</label>
+                        <input type="text" class="form-control" asp-for="Unite" placeholder="Unité" />
+                        <span asp-validation-for="Unite"></span>
+                    </div>
+                    <div class="template-demo mt-2">
+                        <button type="submit" class="btn btn-outline-primary btn-icon-text">
+                            <i class="mdi mdi-file-check btn-icon-prepend"></i> Modifier
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+

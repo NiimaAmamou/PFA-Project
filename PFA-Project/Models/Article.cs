@@ -5,7 +5,7 @@ namespace PFA_Project.Models
     public class Article
     {
         [Key]
-        public int IdArticle { get; set; }
+        public int ?IdArticle { get; set; }
         public string? RefArticle { get; set; }
         public string ?LibelleArticle { get; set; }
         

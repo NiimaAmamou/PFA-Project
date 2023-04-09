@@ -49,6 +49,29 @@ namespace PFA_Project.Controllers
             }
             return RedirectToAction("ListArticles");
         }
-      
+        public IActionResult Edit(int ?id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("ListArticles");
+            }
+            var ar = db.Articles.Find(id);
+            if (ar == null)
+            {
+                return RedirectToAction("ListArticles");
+            }
+            return View(ar);
+        }
+        [HttpPost]
+        public IActionResult Edit(Article article)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Update(article);
+                db.SaveChanges();
+                return RedirectToAction("ListArticles");
+            }
+            return View(article);
+        }
     }
 }
