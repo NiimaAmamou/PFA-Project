@@ -70,7 +70,8 @@ namespace PFA_Project.Controllers
             }
             return RedirectToAction("List");
         }
-        public IActionResult Delete(int? id)
+        
+        public IActionResult Supprimer(int? id)
         {
             if (id == null)
             {

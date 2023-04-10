@@ -6,7 +6,7 @@
                 <h4 class="card-title">Modifier une Table</h4>
 
                 <form class="forms-sample" method="post" enctype="multipart/form-data">
-                    >
+
                             <div asp-validation-summary="All" />
                             <div class="form-group">
                                 <label for="numT">Libelle</label>
@@ -15,7 +15,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="cap">Image</label>
-                                <input class="form-control" asp-for="image1" placeholder="Capacite" />
+                                <img src="/@Model.Image" height="200px" width="200px" />
+                                <input class="form-control" asp-for="image1" value="Image" />
                                 <span asp-validation-for="image1"></span>
                             </div>
                             <div class="template-demo mt-2">

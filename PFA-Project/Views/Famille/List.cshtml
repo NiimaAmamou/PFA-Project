@@ -18,7 +18,7 @@
                             </tr>
                             @foreach (Famille famille in Model)
                             {
-                                var path = "~/img/" + famille.Image;
+                                var path = "/" + famille.Image;
                                 <tr>
                                     <td>@famille.Id</td>
                                     <td>@famille.Libelle</td>
