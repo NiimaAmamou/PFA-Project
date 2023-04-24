@@ -1,0 +1,41 @@
+﻿@model List<Fournisseur>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <p>
+                        <a class="btn btn-primary btn-rounded btn-icon" asp-action="Ajouter" asp-controller="Fournisseur">
+                            <i class="mdi mdi-cart-plus"></i>
+                        </a>
+                    </p>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Id Fournisseur</th>
+                                <th>Nom</th>
+                                <th>Adresse</th>
+                                <th>Nº Telephone</th>
+                                <th>Email</th>
+                                <th>Statut</th>
+                            </tr>
+                            @foreach (Fournisseur fournisseur in Model)
+                            {
+                                <tr>
+                                    <td>@fournisseur.Id</td>
+                                    <td>@fournisseur.Nom</td>
+                                    <td>@fournisseur.Adresse</td>
+                                    <td>@fournisseur.N_Tel</td>
+                                    <td>@fournisseur.Email</td>
+                                    <td>@fournisseur.Statut</td>
+                                    <td><a class="btn btn-danger" asp-controller="Famille" asp-action="Supprimer" asp-route-id="@fournisseur.Id">Supprimer</a></td>
+                                    <td><a class="btn btn-outline-secondary" asp-controller="Famille" asp-action="Modifier" asp-route-id="@fournisseur.Id">Modifier</a></td>
+                                </tr>
+                            }
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
