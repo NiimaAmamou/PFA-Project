@@ -1,0 +1,62 @@
+﻿@model List<FamilleProduit>
+@{
+    ViewBag.Title = "Liste des Produits";
+}
+<div class="page-header">
+    <h3 class="page-title">Listes des Produits</h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Produit/AjouterProduit">Ajouter un produit</a></li>
+
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <p>
+                        <a class="btn btn-primary btn-rounded btn-icon" asp-action="AjouterProduit" asp-controller="Produit">
+                            <i class="mdi mdi-cart-plus"></i>
+                        </a>
+                    </p>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Numéro de Produit</th>
+                                <th>Libélle Produit</th>
+                                <th>Prix Unitaire</th>
+                                <th>Image de Produit</th>
+                                <th>Famille de Produit</th>
+                            </tr>
+                            @foreach (FamilleProduit pr in Model)
+                            {
+                              
+                                var path = "/ImgProduit/" + pr.Image;
+                                <tr>
+                                    <td>@pr.IdProduit</td>
+                                    <td>@pr.LibelleProduit</td>
+                                    <td>@pr.Prix</td>
+                                    <td><img src="@path" height="200px" width="200px" /></td>
+                                   
+                                    <td>@pr.LibelleFamille</td>
+                                    <td>
+                                        <center>
+                                            <a href="/Produit/EditProduit/@pr.IdProduit" class="text-success">
+                                                <i class="mdi mdi-table-edit
+"></i>
+                                            </a> |
+                                            <a href="/Produit/DeleteProduit/@pr.IdProduit" onclick="return confirm('Voulez-Vous Supprimer?');" class="text-danger"><i class="mdi mdi-delete"></i></a>
+                                        </center>
+                                    </td>
+                                </tr>
+                            }
+                        </thead>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

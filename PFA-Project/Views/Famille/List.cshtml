@@ -1,37 +1,59 @@
 ﻿@model List<Famille>
+@{
+    ViewBag.Title = "Liste des Familles";
+}
+<div class="page-header">
+    <h3 class="page-title">Listes des Familles</h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Famille/Ajouter">Ajouter</a></li>
+           
+        </ol>
+    </nav>
+</div>
 <div class="row">
-    <div class="col-lg-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
                     <p>
                         <a class="btn btn-primary btn-rounded btn-icon" asp-action="Ajouter" asp-controller="Famille">
                             <i class="mdi mdi-cart-plus"></i>
-                        </a>
+                    </a>
                     </p>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Id Famille</th>
-                                <th>Libelle</th>
-                                <th>Image</th>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Id Famille</th>
+                            <th>Libelle Famille</th>
+                            <th>Couleur Associée</th>
+                           
+                          
+                        </tr>
+                        @foreach (Famille fm in Model)
+                        {
+                       <tr>
+                                <td>@fm.Id</td>
+                                <td>@fm.Libelle</td>
+                                <td style="background-color:@fm.Couleur">&nbsp</td>
+                           <td>
+                                    <center>
+                                            <a href="/Famille/Modifier/@fm.Id" class="text-success">
+                                                <i class="mdi mdi-table-edit
+"></i>
+                                            </a> |
+                                            <a href="/Famille/Supprimer/@fm.Id" onclick="return confirm('Voulez-Vous Supprimer?');" class="text-danger"><i class="mdi mdi-delete"></i></a>
+                                    </center>
+                                    </td>
                             </tr>
-                            @foreach (Famille famille in Model)
-                            {
-                                var path = "/" + famille.Image;
-                                <tr>
-                                    <td>@famille.Id</td>
-                                    <td>@famille.Libelle</td>
-                                    <td><img src="@path" height="200px" width="200px" /></td>
-                                    <td><a class="btn btn-danger" asp-controller="Famille" asp-action="Supprimer" asp-route-id="@famille.Id">Supprimer</a></td>
-                                    <td><a class="btn btn-outline-secondary" asp-controller="Famille" asp-action="Modifier" asp-route-id="@famille.Id">Modifier</a></td>
-                                </tr>
-                            }
-                        </thead>
+                        }
+                    </thead>
+                      
+                </table>
 
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+                  
+</div>
+</div>
+</div>
+</div>
 </div>

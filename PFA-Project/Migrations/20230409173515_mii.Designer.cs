@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PFA_Project;
 
@@ -11,9 +12,10 @@ using PFA_Project;
 namespace PFA_Project.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230409173515_mii")]
+    partial class mii
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +57,7 @@ namespace PFA_Project.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
-                    b.Property<string>("Couleur")
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Libelle")
@@ -65,63 +67,6 @@ namespace PFA_Project.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Familles");
-                });
-
-            modelBuilder.Entity("PFA_Project.Models.Fournisseur", b =>
-                {
-                    b.Property<int?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
-
-                    b.Property<string>("Adresse")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("N_Tel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Statut")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Fournisseur");
-                });
-
-            modelBuilder.Entity("PFA_Project.Models.Produit", b =>
-                {
-                    b.Property<int>("IdProduit")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdProduit"), 1L, 1);
-
-                    b.Property<int>("IdFamille")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LibelleProduit")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("Prix")
-                        .HasColumnType("float");
-
-                    b.HasKey("IdProduit");
-
-                    b.ToTable("Produit");
                 });
 
             modelBuilder.Entity("PFA_Project.Models.Table", b =>

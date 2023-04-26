@@ -1,30 +1,47 @@
 ﻿@model Famille
+@{
+    ViewBag.Title = "Ajouter Famille";
+}
+<div class="page-header">
+    <h3 class="page-title">Ajouter  des familles</h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Famille/List">Retourner vers la liste</a></li>
+
+        </ol>
+    </nav>
+</div>
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">
-                    Ajouter une famille</h4>
 
-                <form class="forms-sample" method="post" enctype="multipart/form-data">
-                            <div asp-validation-summary="All" />
-                            <div class="form-group">
-                                <label for="ref">Libelle</label>
-                                <input type="text" class="form-control" asp-for="Libelle" placeholder="Libelle" />
-                                <span asp-validation-for="Libelle"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="ref">Image</label>
-                                <input type="file" class="form-control" asp-for="image1">
-                                <span asp-validation-for="image1"></span>
-                            </div>
-                            <div class="template-demo mt-2">
-                                <button type="submit" class="btn btn-outline-primary btn-icon-text">
-                                    <i class="mdi mdi-file-check btn-icon-prepend"></i> Ajouter
-                                </button>
-                            </div>
-                        </form>
+                <p>
+                    <a class="btn btn-primary btn-rounded btn-icon" asp-action="Ajouter" asp-controller="Famille">
+                        <i class="mdi mdi-cart-plus"></i>
+                    </a>
+                </p>
+                <form class="forms-sample" method="post">
+                    <div asp-validation-summary="All" />
+                    <div class="form-group">
+                        <label for="ref">Libellé</label>
+                        <input type="text" class="form-control" asp-for="Libelle" placeholder="Libellé" />
+                        <span asp-validation-for="Libelle"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="couleur">Couleur</label>
+                        <input type="color" class="form-control" asp-for="Couleur" placeholder="Couleur" />
+                        <span asp-validation-for="Couleur"></span>
+                    </div>
+                   
+                    <div class="template-demo mt-2">
+                        <button type="submit" class="btn btn-primary btn-rounded btn-fw"> Ajouter Famille</button>
+
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
 </div>
+
