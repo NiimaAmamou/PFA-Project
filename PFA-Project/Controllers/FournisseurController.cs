@@ -29,5 +29,36 @@ namespace PFA_Project.Controllers
             }
             return RedirectToAction("List");
         }
+        public IActionResult Modifier(int? id)
+        {
+            var fo = db.Fournisseur.Find(id);
+            if (id == null|| fo == null)
+            {
+                return RedirectToAction("List");
+            }
+            return View(fo);
+        }
+        [HttpPost]
+        public IActionResult Modifier(Fournisseur fournisseur)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Update(fournisseur);
+                db.SaveChanges();
+                
+            }
+            return RedirectToAction("List");
+
+        }
+        public IActionResult Supprimer(int? id)
+        {
+            var fournisseur = db.Fournisseur.Find(id);
+            if (fournisseur != null)
+            {
+                db.Fournisseur.Remove(fournisseur);
+                db.SaveChanges();
+            }
+            return RedirectToAction("List");
+        }
     }
 }
