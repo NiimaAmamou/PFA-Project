@@ -12,6 +12,8 @@ namespace PFA_Project.Models
         
         public int QteStock { get; set; }
         public string? Unite { get; set; }
+
+        public List<Fournitures> Fournitures { get; set; }
         [ForeignKey("Categorie")]
         public int IdCat { get; set; }
         public Categorie categorie;
