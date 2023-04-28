@@ -29,7 +29,7 @@
                                 <th>Prix Unitaire</th>
                                 <th>Image de Produit</th>
                                 <th>Famille de Produit</th>
-                               
+
                             </tr>
                             @foreach (FamilleProduit pr in Model)
                             {
@@ -42,6 +42,7 @@
                                     <td><img src="@path" height="200px" width="200px" /></td>
                                    
                                     <td>@pr.LibelleFamille</td>
+                                   
                                     <td>
                                         <center>
                                             <a href="/Produit/EditProduit/@pr.IdProduit" class="text-success">

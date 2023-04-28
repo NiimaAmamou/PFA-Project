@@ -6,8 +6,8 @@ namespace PFA_Project.Models
     {
         [Key]
         public int ?Id { get; set; }
-        public Produit produit { get; set; }
-        public Article article { get; set; }
-        public int Quantite { get; set; }
+        public Produit ?produit { get; set; }
+        public Article ?article { get; set; }
+        public int ?Quantite { get; set; }
     }
 }

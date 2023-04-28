@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Caching.Memory;
 using PFA_Project.Models;
@@ -35,7 +36,7 @@ namespace PFA_Project.Controllers
                        
                    })
             .ToList();
-
+           
             return View(produits);
         }
         public void VerifierCache()
@@ -60,9 +61,9 @@ namespace PFA_Project.Controllers
         {
             VerifierCache();
             ViewBag.Familles = new SelectList(famillesCache, "Id", "Libelle");
-            List<Article> articles = db.Articles.ToList();
-            ViewBag.Articles = new SelectList(articles, "IdArticle",  "LibelleArticle");
-            
+           
+            ViewBag.Articles = new SelectList(db.Articles.ToList(), "IdArticle", "LibelleArticle");
+
             return View();
         }
         [HttpPost]
@@ -87,8 +88,8 @@ namespace PFA_Project.Controllers
             }
             VerifierCache();
             ViewBag.Familles = new SelectList(famillesCache, "Id", "Libelle");
-            List<Article> articles = db.Articles.ToList();
-            ViewBag.Articles = new SelectList(articles, "IdArticle", "LibelleArticle");
+            List<Article> ?articles = db.Articles.ToList() ;
+            ViewBag.Articles = new SelectList(articles, "IdArticle", "LibelleArticle") ;
             return RedirectToAction("ListProduit");
 
         }
