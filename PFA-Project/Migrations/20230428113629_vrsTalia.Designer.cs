@@ -12,8 +12,8 @@ using PFA_Project;
 namespace PFA_Project.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230427224830_mcat")]
-    partial class mcat
+    [Migration("20230428113629_vrsTalia")]
+    partial class vrsTalia
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -121,6 +121,19 @@ namespace PFA_Project.Migrations
                     b.ToTable("Fournisseur");
                 });
 
+            modelBuilder.Entity("PFA_Project.Models.Fourniture", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Fournitures");
+                });
+
             modelBuilder.Entity("PFA_Project.Models.Produit", b =>
                 {
                     b.Property<int>("IdProduit")
@@ -129,7 +142,13 @@ namespace PFA_Project.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdProduit"), 1L, 1);
 
+                    b.Property<int>("IdArticle")
+                        .HasColumnType("int");
+
                     b.Property<int>("IdFamille")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdProduitArticle")
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
@@ -144,6 +163,32 @@ namespace PFA_Project.Migrations
                     b.HasKey("IdProduit");
 
                     b.ToTable("Produit");
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.ProduitArticle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Quantite")
+                        .HasColumnType("int");
+
+                    b.Property<int>("articleIdArticle")
+                        .HasColumnType("int");
+
+                    b.Property<int>("produitIdProduit")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("articleIdArticle");
+
+                    b.HasIndex("produitIdProduit");
+
+                    b.ToTable("ProduitArticles");
                 });
 
             modelBuilder.Entity("PFA_Project.Models.Table", b =>
@@ -172,6 +217,25 @@ namespace PFA_Project.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tables");
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.ProduitArticle", b =>
+                {
+                    b.HasOne("PFA_Project.Models.Article", "article")
+                        .WithMany()
+                        .HasForeignKey("articleIdArticle")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PFA_Project.Models.Produit", "produit")
+                        .WithMany()
+                        .HasForeignKey("produitIdProduit")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("article");
+
+                    b.Navigation("produit");
                 });
 #pragma warning restore 612, 618
         }

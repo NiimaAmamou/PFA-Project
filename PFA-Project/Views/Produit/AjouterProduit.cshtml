@@ -19,7 +19,7 @@
                     Ajouter un Produit
                 </h4>
 
-                <form class="forms-sample" method="post" enctype="multipart/form-data" onsubmit="result()">
+                <form class="forms-sample" method="post" enctype="multipart/form-data" >
                     <div asp-validation-summary="All" />
                     <div class="form-group">
                         <label for="ref">Libélle</label>
@@ -49,7 +49,7 @@
                         <input type="text" class="form-control" asp-for="pa.Quantite" placeholder="Quantite" id="qte"/>
                     </div>
                     <div class="template-demo mt-2">
-                        <button type="submit" class="btn btn-primary btn-rounded btn-fw"> + </button>
+                        <button type="submit" class="btn btn-primary btn-rounded btn-fw" onClick="affichageTab()"> + </button>
 
                     </div>
                     <div class="template-demo mt-2">
@@ -61,6 +61,28 @@
         </div>
     </div>
 </div>
-<script src="~/assets/js/produit.js ">
+<script>
+    function affichageTab()
+    {
+        let libelle = document.getElementById('libelle').value;
+        let pu = document.getElementById('pu').value;
+       
+        let article = document.getElementById('article').value;
+        let famille = document.getElementById('famille').value;
+        let qte = document.getElementById('qte').value;
+        <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Libelle</th>
+                                <th>Prix Unitaire</th>
+                                
+                                <th>Article</th>
+                                <th>Famille</th>
+                                <th>Quantite</th>
+                            </tr>
+                           
+                        </thead>
 
+         </table>
+    }
 </script>

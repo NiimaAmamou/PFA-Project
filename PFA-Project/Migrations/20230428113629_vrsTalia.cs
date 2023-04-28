@@ -4,7 +4,7 @@
 
 namespace PFA_Project.Migrations
 {
-    public partial class modifbase1 : Migration
+    public partial class vrsTalia : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -61,7 +61,7 @@ namespace PFA_Project.Controllers
             VerifierCache();
             ViewBag.Familles = new SelectList(famillesCache, "Id", "Libelle");
             List<Article> articles = db.Articles.ToList();
-            ViewBag.Articles = new SelectList(articles, "IdArticle",  "LibelleArticle", "QteStock", "Unite");
+            ViewBag.Articles = new SelectList(articles, "IdArticle",  "LibelleArticle");
             
             return View();
         }
@@ -87,6 +87,8 @@ namespace PFA_Project.Controllers
             }
             VerifierCache();
             ViewBag.Familles = new SelectList(famillesCache, "Id", "Libelle");
+            List<Article> articles = db.Articles.ToList();
+            ViewBag.Articles = new SelectList(articles, "IdArticle", "LibelleArticle");
             return RedirectToAction("ListProduit");
 
         }
@@ -103,6 +105,8 @@ namespace PFA_Project.Controllers
             }
             VerifierCache();
             ViewBag.Familles = new SelectList(famillesCache, "Id", "Libelle");
+            List<Article> articles = db.Articles.ToList();
+            ViewBag.Articles = new SelectList(articles, "IdArticle", "LibelleArticle");
             return View(pr);
         }
         [HttpPost]
@@ -127,6 +131,8 @@ namespace PFA_Project.Controllers
             }
             VerifierCache();
             ViewBag.Familles = new SelectList(famillesCache, "Id", "Libelle");
+            List<Article> articles = db.Articles.ToList();
+            ViewBag.Articles = new SelectList(articles, "IdArticle", "LibelleArticle");
             return RedirectToAction("ListProduit");
         }
         public IActionResult DeleteProduit(int? id)
