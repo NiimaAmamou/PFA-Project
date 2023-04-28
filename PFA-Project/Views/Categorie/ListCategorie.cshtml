@@ -1,0 +1,53 @@
+﻿@model List<Categorie>
+@{
+    ViewBag.Title = "Liste des Categories";
+}
+<div class="page-header">
+    <h3 class="page-title">Listes des Categories</h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Categorie/CreateCategorie">Ajouter</a></li>
+
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Id Categorie</th>
+                                <th>Libelle Categorie</th>
+                                <th>Actions</th>
+                            </tr>
+                            @foreach (Categorie ct in Model)
+                            {
+                             <tr>
+                                    <td>@ct.IdCategorie</td>
+                                    <td>@ct.LibelleCategorie</td>
+                                   
+                                    <td> 
+                                        <center>
+                                            <a href="/Categorie/EditCategorie/@ct.IdCategorie" class="text-success">
+                                                <i class="mdi mdi-table-edit
+"></i>
+                                            </a> |
+                                    <a href="/Categorie/DeleteCategorie/@ct.IdCategorie" onclick="return confirm('Voulez-Vous Supprimer?');" class="text-danger"><i class="mdi mdi-delete"></i></a>
+                                        </center>
+                                    </td>
+                                </tr>
+                            }
+                        </thead>
+
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

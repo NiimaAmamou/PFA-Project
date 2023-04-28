@@ -1,5 +1,5 @@
 ﻿
-@model List<Article>
+@model List<CategorieArticle>
 @{
     ViewBag.Title = "Liste des Articles";
 }
@@ -31,24 +31,26 @@
                            
                             <th>Quantité</th>
                                 <th>Unité</th>
-                                <th></th>
+                                <th>LibelleCategorie</th>
+                                <th>Actions</th>
                         </tr>
-                        @foreach (Article art in Model)
+                        @foreach (CategorieArticle cta in Model)
                         {
-                            <tr class="@(art.QteStock<=5?"bg-warning":"")">
-                                <td>@art.IdArticle</td>
-                                <td>@art.RefArticle</td>
-                                <td>@art.LibelleArticle</td>
+                            <tr>
+                                    <td>@cta.IdArticle</td>
+                                    <td>@cta.RefArticle</td>
+                                    <td>@cta.LibelleArticle</td>
                                
-                                <td>@art.QteStock</td>
-                                    <td>@art.Unite</td>
+                                    <td>@cta.QteStock</td>
+                                    <td>@cta.Unite</td>
+                                    <td>@cta.LibelleCategorie</td>
                                     <td>
                                     <center>
-                                            <a href="/Article/Edit/@art.IdArticle" class="text-success">
+                                            <a href="/Article/Edit/@cta.IdArticle" class="text-success">
                                                 <i class="mdi mdi-table-edit
 "></i>
                                             </a> |
-                                            <a href="/Article/Delete/@art.IdArticle" onclick="return confirm('Voulez-Vous Supprimer?');" class="text-danger"><i class="mdi mdi-delete"></i></a>
+                                            <a href="/Article/Delete/@cta.IdArticle" onclick="return confirm('Voulez-Vous Supprimer?');" class="text-danger"><i class="mdi mdi-delete"></i></a>
                                     </center>
                                     </td>
                             </tr>

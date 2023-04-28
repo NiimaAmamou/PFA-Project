@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PFA_Project.Models;
 using System.Reflection.Metadata.Ecma335;
 
@@ -12,13 +13,25 @@ namespace PFA_Project.Controllers
         {
             this.db = db;
         }
+      
         public IActionResult ListArticles()
         {
-            List<Article> articles = db.Articles.ToList() ;
+            List<CategorieArticle> articles = db.Categories.Join(db.Articles, a => a.IdCategorie,c=>c.IdCat,(Categorie,Article)=> new {Categorie=Categorie, Article=Article})
+                 .Select(outpout => new CategorieArticle
+                 {
+                     IdArticle = outpout.Article.IdArticle,
+                     RefArticle = outpout.Article.RefArticle,
+                     LibelleArticle = outpout.Article.LibelleArticle,
+                     QteStock = outpout.Article.QteStock,
+                     Unite = outpout.Article.Unite,
+                     LibelleCategorie=outpout.Categorie.LibelleCategorie
+                 })
+            .ToList();
             return View(articles);
         }
         public IActionResult Create()
         {
+            ViewBag.Categories = new SelectList(db.Categories, "IdCategorie", "LibelleCategorie");
             return View();
         }
         [HttpPost]
@@ -30,6 +43,7 @@ namespace PFA_Project.Controllers
                 db.SaveChanges();
                 return RedirectToAction("ListArticles");
             }
+            ViewBag.Categories = new SelectList(db.Categories, "IdCategorie", "LibelleCategorie");
             return View(article);
 
         }
@@ -60,6 +74,7 @@ namespace PFA_Project.Controllers
             {
                 return RedirectToAction("ListArticles");
             }
+            ViewBag.Categories = new SelectList(db.Categories, "IdCategorie", "LibelleCategorie");
             return View(ar);
         }
         [HttpPost]
@@ -71,6 +86,7 @@ namespace PFA_Project.Controllers
                 db.SaveChanges();
                 return RedirectToAction("ListArticles");
             }
+            ViewBag.Categories = new SelectList(db.Categories, "IdCategorie", "LibelleCategorie");
             return View(article);
         }
     }
