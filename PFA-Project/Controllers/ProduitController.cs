@@ -60,7 +60,9 @@ namespace PFA_Project.Controllers
         {
             VerifierCache();
             ViewBag.Familles = new SelectList(famillesCache, "Id", "Libelle");
-            //viewbag articles!
+            List<Article> articles = db.Articles.ToList();
+            ViewBag.Articles = new SelectList(articles, "IdArticle",  "LibelleArticle", "QteStock", "Unite");
+            
             return View();
         }
         [HttpPost]

@@ -2,5 +2,6 @@
 {
     public class Fournitures
     {
+        public int Id { get; set; }
     }
 }

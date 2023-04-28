@@ -16,5 +16,11 @@ namespace PFA_Project.Models
         [ForeignKey("Famille")]
         public int IdFamille { get; set; }
         public Famille famille;
+        [ForeignKey("Article")]
+        public int IdArticle { get; set; }
+        public Article article;
+        [ForeignKey("Article")]
+        public int IdProduitArticle { get; set; }
+        public ProduitArticle pa;
     }
 }
