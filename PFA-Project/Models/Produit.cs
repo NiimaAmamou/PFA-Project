@@ -18,6 +18,6 @@ namespace PFA_Project.Models
         public Famille famille;
       
    
-        public List<ProduitArticle> ?produitArticles { get; set; }
+        //public List<ProduitArticle> ?produitArticles { get; set; }
     }
 }

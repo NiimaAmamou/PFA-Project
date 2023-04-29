@@ -17,6 +17,6 @@ namespace PFA_Project.Models
         [ForeignKey("Categorie")]
         public int IdCat { get; set; }
         public Categorie categorie;
-        public List<ProduitArticle> ?produitArticles { get; set; }
+      //  public List<ProduitArticle> ?produitArticles { get; set; }
     }
 }
