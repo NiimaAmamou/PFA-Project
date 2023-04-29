@@ -25,7 +25,7 @@ namespace PFA_Project.Controllers
         }
         public IActionResult ListProduit()
         {
-            List<FamilleProduit> produits = db.Familles.Join(db.Produit, p => p.Id,f => f.IdFamille,(Famille, Produit) => new { Famille = Famille, Produit = Produit })
+            List<FamilleProduit> produits = db.Familles.Join(db.Produits, p => p.Id,f => f.IdFamille,(Famille, Produit) => new { Famille = Famille, Produit = Produit })
                .Select(outpout => new FamilleProduit
                    {
                        IdProduit = outpout.Produit.IdProduit,
@@ -83,7 +83,7 @@ namespace PFA_Project.Controllers
                         using (FileStream stream = System.IO.File.Create(pathName))
                         {
                             produit.image1.CopyTo(stream);
-                            db.Produit.Add(produit);
+                            db.Produits.Add(produit);
                             db.SaveChanges();
                         }
                     }
@@ -101,7 +101,7 @@ namespace PFA_Project.Controllers
             {
                 return RedirectToAction("ListProduit");
             }
-            var pr = db.Produit.Find(id);
+            var pr = db.Produits.Find(id);
             if (pr == null)
             {
                 return RedirectToAction("ListProduit");
@@ -145,10 +145,10 @@ namespace PFA_Project.Controllers
             {
                 return RedirectToAction("ListProduit");
             }
-            var pr = db.Produit.Find(id);
+            var pr = db.Produits.Find(id);
             if (pr != null)
             {
-                db.Produit.Remove(pr);
+                db.Produits.Remove(pr);
                 db.SaveChanges();
                 return RedirectToAction("ListProduit");
             }

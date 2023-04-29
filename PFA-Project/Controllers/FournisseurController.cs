@@ -12,7 +12,7 @@ namespace PFA_Project.Controllers
         }
         public IActionResult List()
         {
-            List<Fournisseur> fournisseurs = db.Fournisseur.ToList();
+            List<Fournisseur> fournisseurs = db.Fournisseurs.ToList();
             return View(fournisseurs);
         }
         public IActionResult Ajouter()
@@ -24,14 +24,14 @@ namespace PFA_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Fournisseur.Add(fournisseur);
+                db.Fournisseurs.Add(fournisseur);
                 db.SaveChanges();
             }
             return RedirectToAction("List");
         }
         public IActionResult Modifier(int? id)
         {
-            var fo = db.Fournisseur.Find(id);
+            var fo = db.Fournisseurs.Find(id);
             if (id == null|| fo == null)
             {
                 return RedirectToAction("List");
@@ -52,10 +52,10 @@ namespace PFA_Project.Controllers
         }
         public IActionResult Supprimer(int? id)
         {
-            var fournisseur = db.Fournisseur.Find(id);
+            var fournisseur = db.Fournisseurs.Find(id);
             if (fournisseur != null)
             {
-                db.Fournisseur.Remove(fournisseur);
+                db.Fournisseurs.Remove(fournisseur);
                 db.SaveChanges();
             }
             return RedirectToAction("List");

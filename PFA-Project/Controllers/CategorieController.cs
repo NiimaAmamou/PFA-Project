@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PFA_Project.Migrations;
+
 using PFA_Project.Models;
 
 namespace PFA_Project.Controllers

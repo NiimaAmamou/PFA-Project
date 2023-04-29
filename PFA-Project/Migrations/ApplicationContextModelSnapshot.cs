@@ -116,7 +116,7 @@ namespace PFA_Project.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Fournisseur");
+                    b.ToTable("Fournisseurs");
                 });
 
             modelBuilder.Entity("PFA_Project.Models.Fourniture", b =>
@@ -154,7 +154,7 @@ namespace PFA_Project.Migrations
 
                     b.HasKey("IdProduit");
 
-                    b.ToTable("Produit");
+                    b.ToTable("Produits");
                 });
 
             modelBuilder.Entity("PFA_Project.Models.Table", b =>
