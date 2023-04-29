@@ -72,7 +72,6 @@ namespace PFA_Project.Controllers
             if (ModelState.IsValid)
             {
              
-
                     string[] allowedExtentions = { ".jpg", ".png", ".jpeg" };
                     string fileExtention = Path.GetExtension(produit.image1.FileName).ToLower();
                     if (allowedExtentions.Contains(fileExtention))
