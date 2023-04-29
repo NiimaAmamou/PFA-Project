@@ -71,28 +71,30 @@ namespace PFA_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                string[] allowedExtentions = { ".jpg", ".png", ".jpeg" };
-                string fileExtention = Path.GetExtension(produit.image1.FileName).ToLower();
-                if (allowedExtentions.Contains(fileExtention))
-                {
-                    string newName = Guid.NewGuid() +produit.image1.FileName;
-                    string pathName = Path.Combine("wwwroot/ImgProduit", newName);
-                    produit.Image = newName;
-                    using (FileStream stream = System.IO.File.Create(pathName))
+             
+
+                    string[] allowedExtentions = { ".jpg", ".png", ".jpeg" };
+                    string fileExtention = Path.GetExtension(produit.image1.FileName).ToLower();
+                    if (allowedExtentions.Contains(fileExtention))
                     {
-                        produit.image1.CopyTo(stream);
-                        db.Produit.Add(produit);
-                        db.SaveChanges();
+                        string newName = Guid.NewGuid() + produit.image1.FileName;
+                        string pathName = Path.Combine("wwwroot/ImgProduit", newName);
+                        produit.Image = newName;
+                        using (FileStream stream = System.IO.File.Create(pathName))
+                        {
+                            produit.image1.CopyTo(stream);
+                            db.Produit.Add(produit);
+                            db.SaveChanges();
+                        }
                     }
                 }
+                VerifierCache();
+                ViewBag.Familles = new SelectList(famillesCache, "Id", "Libelle");
+                List<Article>? articles = db.Articles.ToList();
+                ViewBag.Articles = new SelectList(articles, "IdArticle", "LibelleArticle");
+                return RedirectToAction("ListProduit");
             }
-            VerifierCache();
-            ViewBag.Familles = new SelectList(famillesCache, "Id", "Libelle");
-            List<Article> ?articles = db.Articles.ToList() ;
-            ViewBag.Articles = new SelectList(articles, "IdArticle", "LibelleArticle") ;
-            return RedirectToAction("ListProduit");
-
-        }
+        
         public IActionResult EditProduit(int? id)
         {
             if (id == null)
