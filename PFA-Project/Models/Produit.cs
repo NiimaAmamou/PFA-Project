@@ -13,11 +13,9 @@ namespace PFA_Project.Models
 
         [NotMapped]
         public IFormFile image1 { get; set; }
+        public Famille famille { get; set; }
         [ForeignKey("Famille")]
         public int IdFamille { get; set; }
-        public Famille famille;
-      
-   
         //public List<ProduitArticle> ?produitArticles { get; set; }
     }
 }

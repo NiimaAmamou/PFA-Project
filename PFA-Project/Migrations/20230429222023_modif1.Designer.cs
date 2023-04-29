@@ -12,8 +12,8 @@ using PFA_Project;
 namespace PFA_Project.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230429135440_initialbde")]
-    partial class initialbde
+    [Migration("20230429222023_modif1")]
+    partial class modif1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -118,7 +118,7 @@ namespace PFA_Project.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Fournisseur");
+                    b.ToTable("Fournisseurs");
                 });
 
             modelBuilder.Entity("PFA_Project.Models.Fourniture", b =>
@@ -129,7 +129,20 @@ namespace PFA_Project.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
+                    b.Property<int>("IdArticle")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdFournisseur")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Qte")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("IdArticle");
+
+                    b.HasIndex("IdFournisseur");
 
                     b.ToTable("Fournitures");
                 });
@@ -154,9 +167,14 @@ namespace PFA_Project.Migrations
                     b.Property<double?>("Prix")
                         .HasColumnType("float");
 
+                    b.Property<int>("familleId")
+                        .HasColumnType("int");
+
                     b.HasKey("IdProduit");
 
-                    b.ToTable("Produit");
+                    b.HasIndex("familleId");
+
+                    b.ToTable("Produits");
                 });
 
             modelBuilder.Entity("PFA_Project.Models.Table", b =>
@@ -185,6 +203,36 @@ namespace PFA_Project.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tables");
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Fourniture", b =>
+                {
+                    b.HasOne("PFA_Project.Models.Article", "Article")
+                        .WithMany()
+                        .HasForeignKey("IdArticle")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PFA_Project.Models.Fournisseur", "Fournisseur")
+                        .WithMany()
+                        .HasForeignKey("IdFournisseur")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Fournisseur");
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Produit", b =>
+                {
+                    b.HasOne("PFA_Project.Models.Famille", "famille")
+                        .WithMany()
+                        .HasForeignKey("familleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("famille");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,8 +12,8 @@ using PFA_Project;
 namespace PFA_Project.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230429140150_database")]
-    partial class database
+    [Migration("20230429220906_Creationdatabase")]
+    partial class Creationdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -129,7 +129,20 @@ namespace PFA_Project.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
+                    b.Property<int>("IdArticle")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdFournisseur")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Qte")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("IdArticle");
+
+                    b.HasIndex("IdFournisseur");
 
                     b.ToTable("Fournitures");
                 });
@@ -185,6 +198,25 @@ namespace PFA_Project.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tables");
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Fourniture", b =>
+                {
+                    b.HasOne("PFA_Project.Models.Article", "Article")
+                        .WithMany()
+                        .HasForeignKey("IdArticle")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PFA_Project.Models.Fournisseur", "Fournisseur")
+                        .WithMany()
+                        .HasForeignKey("IdFournisseur")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Fournisseur");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,7 +4,7 @@
 
 namespace PFA_Project.Migrations
 {
-    public partial class initialbde : Migration
+    public partial class Creationdatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,7 +53,7 @@ namespace PFA_Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Fournisseur",
+                name: "Fournisseurs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -66,23 +66,11 @@ namespace PFA_Project.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Fournisseur", x => x.Id);
+                    table.PrimaryKey("PK_Fournisseurs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Fournitures",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Fournitures", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Produit",
+                name: "Produits",
                 columns: table => new
                 {
                     IdProduit = table.Column<int>(type: "int", nullable: false)
@@ -94,7 +82,7 @@ namespace PFA_Project.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Produit", x => x.IdProduit);
+                    table.PrimaryKey("PK_Produits", x => x.IdProduit);
                 });
 
             migrationBuilder.CreateTable(
@@ -112,13 +100,47 @@ namespace PFA_Project.Migrations
                 {
                     table.PrimaryKey("PK_Tables", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Fournitures",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdArticle = table.Column<int>(type: "int", nullable: false),
+                    IdFournisseur = table.Column<int>(type: "int", nullable: false),
+                    Qte = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Fournitures", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Fournitures_Articles_IdArticle",
+                        column: x => x.IdArticle,
+                        principalTable: "Articles",
+                        principalColumn: "IdArticle",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Fournitures_Fournisseurs_IdFournisseur",
+                        column: x => x.IdFournisseur,
+                        principalTable: "Fournisseurs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Fournitures_IdArticle",
+                table: "Fournitures",
+                column: "IdArticle");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Fournitures_IdFournisseur",
+                table: "Fournitures",
+                column: "IdFournisseur");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Articles");
-
             migrationBuilder.DropTable(
                 name: "Categories");
 
@@ -126,16 +148,19 @@ namespace PFA_Project.Migrations
                 name: "Familles");
 
             migrationBuilder.DropTable(
-                name: "Fournisseur");
-
-            migrationBuilder.DropTable(
                 name: "Fournitures");
 
             migrationBuilder.DropTable(
-                name: "Produit");
+                name: "Produits");
 
             migrationBuilder.DropTable(
                 name: "Tables");
+
+            migrationBuilder.DropTable(
+                name: "Articles");
+
+            migrationBuilder.DropTable(
+                name: "Fournisseurs");
         }
     }
 }
