@@ -21,7 +21,7 @@ namespace PFA_Project.Controllers
             this.db = db;
             this.memoryCache = memoryCache;
             this.logger = logger;
-          
+           
         }
         public IActionResult ListProduit()
         {
@@ -38,7 +38,7 @@ namespace PFA_Project.Controllers
             .ToList();
            
             return View(produits);
-        }
+        }      
         public void VerifierCache()
         {
             // verifier si n'existe pas  une cache concernant famille!
