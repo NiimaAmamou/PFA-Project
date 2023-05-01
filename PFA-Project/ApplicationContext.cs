@@ -17,7 +17,7 @@ namespace PFA_Project
         public DbSet<Fournisseur> Fournisseurs { get; set; }
         public DbSet<Produit> Produits { get; set; }
         public  DbSet<Categorie> Categories { get; set; }
-     //   public DbSet<ProduitArticle> ProduitArticles { get; set; }
+        public DbSet<ArticleProduit> ArticleProduits { get; set; }
         public DbSet<Fourniture> Fournitures { get; set; }
 
     }

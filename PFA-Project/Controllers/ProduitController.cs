@@ -67,11 +67,11 @@ namespace PFA_Project.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult AjouterProduit(Produit produit)
+        public IActionResult AjouterProduit(Produit produit, string[] id_articles,string[] quantites)
         {
             if (ModelState.IsValid)
             {
-             
+                    
                     string[] allowedExtentions = { ".jpg", ".png", ".jpeg" };
                     string fileExtention = Path.GetExtension(produit.image1.FileName).ToLower();
                     if (allowedExtentions.Contains(fileExtention))
@@ -84,6 +84,19 @@ namespace PFA_Project.Controllers
                             produit.image1.CopyTo(stream);
                             db.Produits.Add(produit);
                             db.SaveChanges();
+                        for(int i=0;i<id_articles.Length;i++)
+                        {
+                            db.ArticleProduits.Add(new ArticleProduit()
+                            {
+                                IdProduit = produit.IdProduit,
+                                IdArticle = int.Parse(id_articles[i]),
+                                Quantite = int.Parse(quantites[i])
+                            });
+                            db.SaveChanges();
+                                
+
+                        }
+                        return RedirectToAction("ListeProduit");
                         }
                     }
                 }
