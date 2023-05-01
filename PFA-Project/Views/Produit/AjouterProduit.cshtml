@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Ajouter Produit";
 }
+
 <div class="page-header">
     <h3 class="page-title">Ajouter  des Produits</h3>
     <nav aria-label="breadcrumb">
@@ -19,7 +20,7 @@
                     Ajouter un Produit
                 </h4>
 
-                <form class="forms-sample" method="post" enctype="multipart/form-data">
+                <form class="forms-sample" method="post" enctype="multipart/form-data" id="myForm">
                     <div asp-validation-summary="All" />
                     <div class="form-group">
                         <label for="ref">Libélle</label>
@@ -48,15 +49,20 @@
                         <label for="ref">Quantite</label>
                         <input type="text" class="form-control"  placeholder="Quantite" id="quantite" />
                     </div>
-                    <table>
-                         <th>Libellé</th>
-                        <th>Quantité</th>
-                        <th>Actions</th>
+                    <input type="button" class="btn btn-primary btn-rounded btn-fw" value="Actualiser formulaire" onClick="fun()" />
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Libellé</th>
+                            <th>Prix Unitaire</th>
+                            <th>Quantité</th>
+                            <th>Actions</th>
+                        </tr>
+                         
                         
                         <tbody id="content">
 
                         </tbody>
-                     <br />
+                     
                     </table>
                     <div class="template-demo mt-2">
                         <button type="button" class="btn btn-primary btn-rounded btn-fw" onclick="Create()"> + </button>
@@ -71,40 +77,3 @@
         </div>
     </div>
 </div>
-<script>
-    let article = [];
-
-    function Create() {
-        var article = document.getElementById("id_article");
-        var articleid = article.value;
-        var articlelibelle = article.options[article.selectedIndex].text;
-        var quantiteart = document.getElementById("quantite").value;
-        let newArticle = {
-            id_article: articleid,
-            lib_article: articlelibelle,
-            quantite: quantiteart,
-        };
-        article.push(newArticle);
-        Read();
-    }
-    
-    function Read()
-    {
-        var data = '';
-        for (var i = 0; i < article.length; i++) {
-            data += '<tr>';
-            data += '<td>' + article[i].articlelibelle + '</td>';
-            data += '<td>' + article[i].quantiteart + '</td>';
-            data += '<td><button onclick=SupprimerArticle(' + i + ')>Delete</button></td>';
-            data += '</tr>';
-        }
-        document.getElementById("content").innerHTML = article.length;
-        document.getElementById("content").innerHTML = data;
-    }
-    function SupprimerArticle(item) {
-        article.splice(item, 1);
-        Read();
-    }
-
-    }
-</script>

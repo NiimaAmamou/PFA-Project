@@ -1,23 +1,41 @@
-﻿namespace PFA_Project.wwwroot.assets.js {
-    function result() {
-        let libelle = document.getElementById('libelle').value;
-        let pu = document.getElementById('pu').value;
-        let img = document.getElementById('img').value;
-        let article = document.getElementById('article').value;
-        let famille = document.getElementById('famille').value;
-        let qte = document.getElementById('qte').value;
-        sessionStorage.setItem('libelle', libelle);
-        sessionStorage.setItem('pu', pu);
-        sessionStorage.setItem('img', img);
-        sessionStorage.setItem('article', article);
-        sessionStorage.setItem('famille', famille);
-        sessionStorage.setItem('qte', qte);
+﻿let articles = [];
 
+    function Create() {
+    var article = document.getElementById("id_article");
+    var articleid = article.value;
+    var prixarticle = document.getElementById("pu").value;
+    var articlelibelle = article.options[article.selectedIndex].text;
+    var quantiteart = document.getElementById("quantite").value;
+    var newArticle = {
+        id_article: articleid,
+        prixunitaire: prixarticle,
+        lib_article: articlelibelle,
+        quantite: quantiteart,
+        };
+    articles.push(newArticle);
+    console.log(articles);
+    Read();
     }
-    let getLibelle = document.getElementById('libelle').value = sessionStorage.getItem('libelle');
-    let getPu = document.getElementById('pu').value = sessionStorage.getItem('pu');
-    let getImg = document.getElementById('img').value = sessionStorage.getItem('img');
-    let getArticle = document.getElementById('article').value = sessionStorage.getItem('article');
-    let getFamille = document.getElementById('famille').value = sessionStorage.getItem('famille');
-    let getQte = document.getElementById('qte').value = sessionStorage.getItem('qte');
+
+    function Read() {
+        var data = '';
+    for (var i = 0; i < articles.length; i++) {
+        data += '<tr>';
+        data += '<td> ' + articles[i].lib_article + '</td > ';
+        data += '<td> ' + articles[i].prixunitaire + '</td > ';
+        data += '<td>' + articles[i].quantite + '</td>';
+        data += '<td><button class="btn btn-primary btn-rounded btn-fw" onclick="SupprimerArticle(' + i + ')">Delete</button></td>';
+    data += '</tr>';
+        }
+document.getElementById("content").innerHTML = data;
+       // document.getElementById("total").innerHTML = articles.length;
+    }
+
+function SupprimerArticle(item) {
+    articles.splice(item, 1);
+    Read();
 }
+function fun() {
+    document.getElementById("myForm").reset();
+}   
+ 
