@@ -10,7 +10,7 @@ namespace PFA_Project.Models
         public string? LibelleProduit { get; set; }
         public double? Prix { get; set; }
         public string ?Image { get; set; }
-        public string LibelleFamille { get; set; }
+        public string? LibelleFamille { get; set; }
     
     }
 }

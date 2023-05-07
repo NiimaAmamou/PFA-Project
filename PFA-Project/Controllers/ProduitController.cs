@@ -96,11 +96,11 @@ namespace PFA_Project.Controllers
                                 
 
                         }
-                        return RedirectToAction("ListeProduit");
+                        return RedirectToAction("ListProduit");
                         }
                     }
                 }
-                VerifierCache();
+               VerifierCache();
                 ViewBag.Familles = new SelectList(famillesCache, "Id", "Libelle");
                 List<Article>? articles = db.Articles.ToList();
                 ViewBag.Articles = new SelectList(articles, "IdArticle", "LibelleArticle");

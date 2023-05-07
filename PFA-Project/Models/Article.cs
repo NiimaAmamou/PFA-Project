@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PFA_Project.Models
@@ -13,10 +14,10 @@ namespace PFA_Project.Models
         public int QteStock { get; set; }
         public string? Unite { get; set; }
 
-       //public List<Fournitures> Fournitures { get; set; }
+        public List<Fourniture>? Fournitures { get; set; }
         [ForeignKey("Categorie")]
-        public int IdCat { get; set; }
-        public Categorie categorie;
-      //  public List<ProduitArticle> ?produitArticles { get; set; }
+        public int ?IdCat { get; set; }
+        public Categorie ?categorie;
+      //  public List<ArticleProduit>? produitArticles { get; set; }
     }
 }

@@ -7,9 +7,9 @@ namespace PFA_Project.Models
         [Key]
         public int Id { get; set; }
         public int NumTable { get; set; }
-        public string Capacite { get; set; }
-        public string EtatTable { get; set; }
-        public string Description { get; set; }
+        public string ?Capacite { get; set; }
+        public string ?EtatTable { get; set; }
+        public string ?Description { get; set; }
 
     }
 }

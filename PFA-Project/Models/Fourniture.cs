@@ -5,18 +5,17 @@ namespace PFA_Project.Models
 {
     public class Fourniture
     {
-        public int ?Id { get; set; }
-        public Article Article { get; set; }
+        public int Id { get; set; }
+        public Article ?Article { get; set; }
         [ForeignKey("Article")]
         public int IdArticle { get; set; }
-        public Fournisseur Fournisseur { get; set; }
+        public Fournisseur ?Fournisseur { get; set; }
         [ForeignKey("Fournisseur")]
         public int IdFournisseur { get; set; }
         public double Qte { get; set; }
 
         public Fourniture()
         {
-
         }
         public Fourniture(FournitureAddViews fv)
         {

@@ -14,7 +14,7 @@ namespace PFA_Project.ModelViews
         }
         public FournitureAddViews(Fourniture f)
         {
-            IdArticle = f.IdArticle;
+            IdArticle =f.IdArticle;
             IdFournisseur = f.IdFournisseur;
             Qte = f.Qte;
         }

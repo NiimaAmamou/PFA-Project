@@ -30,7 +30,10 @@ namespace PFA_Project.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("IdArticle"), 1L, 1);
 
-                    b.Property<int>("IdCat")
+                    b.Property<int?>("CategorieIdCategorie")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdCat")
                         .HasColumnType("int");
 
                     b.Property<string>("LibelleArticle")
@@ -46,6 +49,8 @@ namespace PFA_Project.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdArticle");
+
+                    b.HasIndex("CategorieIdCategorie");
 
                     b.ToTable("Articles");
                 });
@@ -91,7 +96,6 @@ namespace PFA_Project.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCategorie"), 1L, 1);
 
                     b.Property<string>("LibelleCategorie")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdCategorie");
@@ -111,7 +115,6 @@ namespace PFA_Project.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Libelle")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -128,22 +131,18 @@ namespace PFA_Project.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
                     b.Property<string>("Adresse")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("N_Tel")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nom")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Statut")
+                    b.Property<bool?>("Statut")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -153,11 +152,11 @@ namespace PFA_Project.Migrations
 
             modelBuilder.Entity("PFA_Project.Models.Fourniture", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("IdArticle")
                         .HasColumnType("int");
@@ -197,7 +196,7 @@ namespace PFA_Project.Migrations
                     b.Property<double?>("Prix")
                         .HasColumnType("float");
 
-                    b.Property<int>("familleId")
+                    b.Property<int?>("familleId")
                         .HasColumnType("int");
 
                     b.HasKey("IdProduit");
@@ -216,15 +215,12 @@ namespace PFA_Project.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Capacite")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EtatTable")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NumTable")
@@ -233,6 +229,13 @@ namespace PFA_Project.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tables");
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Article", b =>
+                {
+                    b.HasOne("PFA_Project.Models.Categorie", null)
+                        .WithMany("Articles")
+                        .HasForeignKey("CategorieIdCategorie");
                 });
 
             modelBuilder.Entity("PFA_Project.Models.ArticleProduit", b =>
@@ -253,13 +256,13 @@ namespace PFA_Project.Migrations
             modelBuilder.Entity("PFA_Project.Models.Fourniture", b =>
                 {
                     b.HasOne("PFA_Project.Models.Article", "Article")
-                        .WithMany()
+                        .WithMany("Fournitures")
                         .HasForeignKey("IdArticle")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PFA_Project.Models.Fournisseur", "Fournisseur")
-                        .WithMany()
+                        .WithMany("Fournitures")
                         .HasForeignKey("IdFournisseur")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -272,12 +275,30 @@ namespace PFA_Project.Migrations
             modelBuilder.Entity("PFA_Project.Models.Produit", b =>
                 {
                     b.HasOne("PFA_Project.Models.Famille", "famille")
-                        .WithMany()
-                        .HasForeignKey("familleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("produits")
+                        .HasForeignKey("familleId");
 
                     b.Navigation("famille");
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Article", b =>
+                {
+                    b.Navigation("Fournitures");
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Categorie", b =>
+                {
+                    b.Navigation("Articles");
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Famille", b =>
+                {
+                    b.Navigation("produits");
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Fournisseur", b =>
+                {
+                    b.Navigation("Fournitures");
                 });
 #pragma warning restore 612, 618
         }

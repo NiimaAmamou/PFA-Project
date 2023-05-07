@@ -6,7 +6,7 @@ namespace PFA_Project.Models
     {
         [Key]
         public int IdCategorie { get; set; }
-        public string LibelleCategorie { get; set; }
-        List<Article> Articles { get; set; }
+        public string? LibelleCategorie { get; set; }
+        public List<Article> ?Articles { get; set; }
     }
 }

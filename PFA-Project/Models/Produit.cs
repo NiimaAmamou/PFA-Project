@@ -12,10 +12,10 @@ namespace PFA_Project.Models
         public string? Image { get; set; }
 
         [NotMapped]
-        public IFormFile image1 { get; set; }
-        public Famille famille { get; set; }
+        public IFormFile ?image1 { get; set; }
+        public Famille? famille { get; set; }
         [ForeignKey("Famille")]
         public int IdFamille { get; set; }
-        //public List<ProduitArticle> ?produitArticles { get; set; }
+        //public List<ArticleProduit> ?produitArticles { get; set; }
     }
 }
