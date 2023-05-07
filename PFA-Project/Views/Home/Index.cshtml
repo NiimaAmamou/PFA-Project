@@ -1,77 +1,60 @@
 ﻿@model List<FamilleProduit>
+
 @{
-    ViewBag.Title = "Notre Menu";
+    ViewData["Title"] = "Menu";
 }
+<!-- Custom styles for this template -->
+<link href="~/menu/css/style.css" rel="stylesheet" />
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-<section class="food_section">
-    <div class="container">
-        <ul class="filters_menu">
-           
-            <li class="active" data-filter="*">Tous</li>
+                <section class="food_section layout_padding">
+                    <div class="container">
+                        <div class="heading_container heading_center">
+                            <h2>
+                                Menu
+                            </h2>
+                        </div>
+                        <ul class="filters_menu">
+                            <li class="active" data-filter="*">All</li>
                             @foreach (var listf in ViewBag.familles)
                             {
-                                <li data-filter=".@listf.Libelle">@listf.Libelle</li>
-            } 
-        </ul>
-
-        <div class="filters-content">
-            <div class="row grid">
-                @foreach (FamilleProduit fa in Model)
-                {
-                                    <div class="col-sm-6 col-lg-4 @fa.LibelleFamille">
-                        <div class="box">
-                        <div>
-                            <div class="img-box">
-                            <img src="/ImgProduit/@fa.Image" alt="">
-                            </div>
-                            <div class="detail-box">
-                                <h5>
-                                    @fa.LibelleProduit
-                                </h5>
-                                <div class="options">
-                                    <h6>
-                                        @fa.Prix DH
-                                    </h6>
-                                    <a href="">
-                                            <i class="fa fa-check-circle" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-               
-              
-                </div>
-                }
-                </div>
-                </div>
-                </div>
-                
-              
-</section>
-                <script>
-                    $(document).ready(function () {
-                        // Initialize Isotope
-                        var $grid = $('.grid').isotope({
-                            itemSelector: '.col-sm-6',
-                            layoutMode: 'fitRows'
-                        });
-
-                        // Filter items on button click
-                        $('.filters_menu li').on('click', function () {
-                            var filterValue = $(this).attr('data-filter');
-                            $grid.isotope({ filter: filterValue });
-
-                            // Set active class on filter button
-                            $('.filters_menu li').removeClass('active');
-                            $(this).addClass('active');
-                        });
-                    });
-                </script>
+                                <li data-filter=".@listf.Libelle.ToLower()">@listf.Libelle</li>
+                            }
+                        </ul>
+                        <div class="filters-content">
+                            <div class="row grid">
+                                @foreach (FamilleProduit fa in Model)
+                                {
+                                    <div class="col-sm-6 col-lg-4 all @fa.LibelleFamille.ToLower()">
+                                        <div class="box">
+                                            <div>
+                                                <div class="img-box">
+                                                    <img src="/ImgProduit/@fa.Image" alt="@fa.LibelleFamille.ToLower()">
+                                                </div>
+                                                <div class="detail-box">
+                                                    <h5>
+                                                        @fa.LibelleProduit
+                                                    </h5>
+                                                    <div class="options">
+                                                        <h6>
+                                                            @fa.Prix DH
+                                                        </h6>
+                                                        <a href="">
+                                                            <i class="fa fa-check-circle" aria-hidden="false"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                </section>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-</div>
+<script>
+    document.body.classList.add("sidebar-icon-only");
+</script>

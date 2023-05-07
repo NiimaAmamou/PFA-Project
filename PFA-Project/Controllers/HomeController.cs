@@ -52,7 +52,6 @@ namespace PFA_Project.Controllers
             {
                 logger.Log(LogLevel.Information, "Familles not found in cache.");
                 famillesCache = db.Familles.ToList();
-
                 memoryCache.Set(cachekey, famillesCache);
 
             }
