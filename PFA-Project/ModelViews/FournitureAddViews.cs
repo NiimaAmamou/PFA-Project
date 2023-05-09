@@ -4,6 +4,7 @@ namespace PFA_Project.ModelViews
 {
     public class FournitureAddViews
     {
+        public int Id { get; set; }
         public int IdArticle { get; set; }
         public int IdFournisseur { get; set; }
         public double Qte { get; set; }

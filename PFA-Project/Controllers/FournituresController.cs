@@ -43,22 +43,19 @@ namespace PFA_Project.Controllers
             ViewBag.ListArticle = new SelectList(db.Articles.ToList(), "IdArticle", "LibelleArticle");
             ViewBag.ListFournisseur = new SelectList(db.Fournisseurs.ToList(), "Id", "Nom");
             Fourniture fo = db.Fournitures.Find(id);
-            FournitureAddViews fv = new FournitureAddViews(fo);
+            /*FournitureAddViews fv = new FournitureAddViews(fo);*/
             if (id == null || fo == null)
             {
                 return RedirectToAction("List");
             }
-            return View(fv);
+            return View(fo);
         }
         [HttpPost]
-        public IActionResult Modifier(FournitureAddViews fv)
+        public IActionResult Modifier(Fourniture fv)
         {
             if (ModelState.IsValid)
             {
-                Fourniture fn = new Fourniture(fv);
-                fn.Article = db.Articles.Find(fv.IdArticle);
-                fn.Fournisseur = db.Fournisseurs.Find(fv.IdFournisseur);
-                db.Update(fn);//3laach raha kat ajouter blast madir modifier 
+                db.Update(fv);//3laach raha kat ajouter blast madir modifier 
                 db.SaveChanges();
 
             }
