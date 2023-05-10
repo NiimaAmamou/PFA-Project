@@ -2,7 +2,7 @@
 {
     public class Fournisseur
     {
-        public int ?Id { get; set; }
+        public int Id { get; set; }
         public string ?Nom { get; set; }
         public string ?Adresse { get; set; }
         public string ?N_Tel { get; set; }
