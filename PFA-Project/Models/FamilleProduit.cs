@@ -11,6 +11,6 @@ namespace PFA_Project.Models
         public double? Prix { get; set; }
         public string ?Image { get; set; }
         public string? LibelleFamille { get; set; }
-    
+        public List<ArticleProduit> articleProduits { get; set; }
     }
 }

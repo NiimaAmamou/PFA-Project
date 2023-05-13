@@ -29,6 +29,8 @@
                                 <th>Prix Unitaire</th>
                                 <th>Image de Produit</th>
                                 <th>Famille de Produit</th>
+                                <th>Article de Produit</th>
+                                <th>Quantite</th>
 
                             </tr>
                             @foreach (FamilleProduit pr in Model)
@@ -42,6 +44,18 @@
                                     <td><img src="@path" height="200px" width="200px" /></td>
                                    
                                     <td>@pr.LibelleFamille</td>
+                                    <td>@foreach(ArticleProduit ar in pr.articleProduits)
+                                        {
+                                            <ul><li>Libelle: @ar.article.LibelleArticle</li
+                                                <li>QuantiteStock :@ar.article.QteStock</li>
+                                            </ul>
+                                        }
+                                    </td>
+                                   @foreach(ArticleProduit ar in pr.articleProduits)
+                                        {
+                                          <td>@ar.Quantite</td>  
+                                        }
+                                   
                                    
                                     <td>
                                         <center>
