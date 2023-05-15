@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using PFA_Project.Models;
 using System.Collections.Generic;
@@ -138,8 +140,13 @@ namespace PFA_Project.Controllers
             {
                 return RedirectToAction("ListProduit");
             }
-            var pr = db.Produits.Find(id);
-            if (pr == null)
+            Produit pr = db.Produits.Find(id);
+            pr.produitArticles = db.ArticleProduits.Where(ap => ap.IdProduit == id).ToList();
+            foreach(ArticleProduit ar in pr.produitArticles)
+            {
+                ar.article = db.Articles.Find(ar.IdArticle);
+            }
+            if(pr==null)
             {
                 return RedirectToAction("ListProduit");
             }
@@ -150,7 +157,7 @@ namespace PFA_Project.Controllers
             return View(pr);
         }
         [HttpPost]
-        public IActionResult EditProduit(Produit produit)
+        public IActionResult EditProduit(Produit produit,ArticleProduit ar)
         {
             if (ModelState.IsValid)
             {
@@ -165,6 +172,7 @@ namespace PFA_Project.Controllers
                     {
                         produit.image1.CopyTo(stream);
                         db.Update(produit);
+                        db.Update(ar);
                         db.SaveChanges();
                     }
                 }

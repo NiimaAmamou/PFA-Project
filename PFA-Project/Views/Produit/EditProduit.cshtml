@@ -1,6 +1,6 @@
 ﻿@model Produit
 @{
-    ViewBag.Title = "Ajouter Produit";
+    ViewBag.Title = "Modifier Produit Produit";
 }
 <div class="page-header">
     <h3 class="page-title">Ajouter  des Produits</h3>
@@ -16,7 +16,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">
-                    Ajouter un Produit
+                    Modifier un Produit
                 </h4>
 
                 <form class="forms-sample" method="post" enctype="multipart/form-data">
@@ -42,15 +42,19 @@
                     <div class="form-group">
                         <label for="ref">Famille </label>
                         <select asp-for="IdFamille" class="form-control" asp-items="@ViewBag.Familles"></select>
-                    </div>
+                    </div
                     <div class="form-group">
-                        <label for="ref">Articles </label>
-                        <select  class="form-control" asp-items="@ViewBag.Articles"></select>
+                        <label>Article </label>
+                        <select class="form-control" asp-items="@ViewBag.Articles" id="id_article"></select>
                     </div>
+                  
                     <div class="form-group">
                         <label for="ref">Quantite</label>
-                        <input type="text" class="form-control" placeholder="Quantite" id="Quantite" />
+                        @for (int i = 0; i < Model.produitArticles.Count; i++)
+                            {<input type="text" class="form-control"  placeholder="@Model.produitArticles[i].Quantite" id="quantite" />}
+                        
                     </div>
+                    
                     <div class="template-demo mt-2">
                         <button type="submit" class="btn btn-primary btn-rounded btn-fw"> Modifier Produit </button>
                        
@@ -60,3 +64,4 @@
         </div>
     </div>
 </div>
+<
