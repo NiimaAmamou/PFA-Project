@@ -1,11 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using PFA_Project.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace PFA_Project.Controllers
 {
+    //You can only enter home if you are logged in
+    [Authorize]
     public class HomeController : Controller
     {
         public List<Famille> famillesCache;
@@ -19,7 +24,11 @@ namespace PFA_Project.Controllers
             this.memoryCache = memoryCache;
             this.logger = logger;
         }
-
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Login");
+        }
         public IActionResult Index()
         {
             VerifierCache();

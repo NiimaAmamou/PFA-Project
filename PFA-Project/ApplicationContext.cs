@@ -20,7 +20,8 @@ namespace PFA_Project
         public DbSet<ArticleProduit> ArticleProduits { get; set; }
         public DbSet<Fourniture> Fournitures { get; set; }
         public DbSet<Commande> Commandes { get; set; }
-        public DbSet<LigneCommande> LigneCommande { get; set; } 
+        public DbSet<LigneCommande> LigneCommande { get; set; }
+        public DbSet<Admin> Admins { get; set; }
 
     }
 }

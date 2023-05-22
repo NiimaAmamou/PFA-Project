@@ -25,6 +25,7 @@ namespace PFA_Project.Controllers
             this.logger = logger;
 
         }
+        
         public IActionResult ListProduit()
         {
             /*List<Produit> produits = db.Produits.Include(f => f.famille).Include(ap => ap.produitArticles).ThenInclude(a => a.article).ToList();
