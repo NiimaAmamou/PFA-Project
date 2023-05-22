@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="~/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
     <link rel="stylesheet" href="~/assets/css/style.css" />
     <link rel="shortcut icon" href="~/assets/images/favicon.png" />
+    <link rel="stylesheet" href="~/Card/stylecart.css"/>
     <style type="text/css">
         .sidebar {
             min-height: 900px !important;
@@ -258,7 +259,9 @@
     <script src="~/assets/js/dashboard.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/assets/js/produit.js"></script>
+    <script src="~/assets/js/Commande.js"></script>
     <script src="~/assets/js/ProduitUpdate.js"></script>
+   
     <!-- End custom js for this page -->
     <!-- nice select -->
     <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
@@ -269,27 +272,33 @@
     <!-- End Google Map -->
     <script>
         // isotope js
+        //Lorsque la page est chargée, la fonction  qui s'exécute.-- >
         $(window).on('load', function () {
-            console.log("Hi");
+     //         Lorsque element filters menu est cliqué la fonction qui s'exécute
             $('.filters_menu li').click(function () {
+                       //  supprime la classe "active" de tous les éléments de la liste
                 $('.filters_menu li').removeClass('active');
+                        // cette ligne ajoute la classe "active" à l'élément de liste sur lequel l'utilisateur a cliqué.
                 $(this).addClass('active');
-
+                        //cette ligne récupère la valeur de l'attribut "data-filter" de l'élément Clique.
                 var data = $(this).attr('data-filter');
+                         //cette ligne utilise la bibliothèque Isotope pour filtrer les éléments de la grille en fonction  l'attribut "data-filter" récupérée.
                 $grid.isotope({
                     filter: data
                 })
             });
-
+            // initialise la bibliothèque Isotope sur la grille d'éléments ".grid"
             var $grid = $(".grid").isotope({
-                itemSelector: ".all",
+                itemSelector: ".all",//Recuperer le nom De Class a Filtrer
                 percentPosition: false,
                 masonry: {
+                   // l'affichage D'elements
                     columnWidth: ".all"
                 }
             })
         });
     </script>
+    <script src="~/Card/scriptpanel.js"></script>
 </body>
 </html>
 

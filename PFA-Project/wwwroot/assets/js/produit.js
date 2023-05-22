@@ -5,7 +5,7 @@
     var articleid = article.value;
     var prixarticle = document.getElementById("pu").value;
     var articlelibelle = article.options[article.selectedIndex].text;
-    var quantiteart = document.getElementById("quantite").value;
+        var quantiteart = document.getElementById("quantite").value;
     var newArticle = {
         id_article: articleid,
         prixunitaire: prixarticle,

@@ -3,7 +3,7 @@ using PFA_Project.Models;
 
 namespace PFA_Project
 {
-    public class ApplicationContext:DbContext
+    public class ApplicationContext : DbContext
     {
         public ApplicationContext()
         {
@@ -16,9 +16,11 @@ namespace PFA_Project
         public DbSet<Table> Tables { get; set; }
         public DbSet<Fournisseur> Fournisseurs { get; set; }
         public DbSet<Produit> Produits { get; set; }
-        public  DbSet<Categorie> Categories { get; set; }
+        public DbSet<Categorie> Categories { get; set; }
         public DbSet<ArticleProduit> ArticleProduits { get; set; }
         public DbSet<Fourniture> Fournitures { get; set; }
+        public DbSet<Commande> Commandes { get; set; }
+        public DbSet<LigneCommande> LigneCommande { get; set; } 
 
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PFA_Project;
 
@@ -11,9 +12,10 @@ using PFA_Project;
 namespace PFA_Project.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230520143641_AjtLigneCommande")]
+    partial class AjtLigneCommande
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,8 +119,8 @@ namespace PFA_Project.Migrations
                     b.Property<bool>("Encaisse")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Etat")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Etat")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -208,6 +210,10 @@ namespace PFA_Project.Migrations
 
                     b.Property<int>("CommandeId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Prix")
                         .HasColumnType("real");

@@ -5,6 +5,7 @@
 }
 <!-- Custom styles for this template -->
 <link href="~/menu/css/style.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Card/stylecart.css" />
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
@@ -27,21 +28,21 @@
                             <div class="row grid">
                                 @foreach (FamilleProduit fa in Model)
                                 {
-                                    <div class="col-sm-6 col-lg-4 all @fa.LibelleFamille.ToLower()">
+                                    <div class="col-sm-6 col-lg-3 all @fa.LibelleFamille.ToLower()">
                                         <div class="box">
                                             <div>
                                                 <div class="img-box">
-                                                    <img src="/ImgProduit/@fa.Image" alt="@fa.LibelleFamille.ToLower()">
+                                                    <img src="/ImgProduit/@fa.Image" alt="@fa.LibelleFamille.ToLower()" id="imgpr_@fa.IdProduit">
                                                 </div>
                                                 <div class="detail-box">
-                                                    <h5>
+                                                    <h5 id="libelleproduit_@fa.IdProduit">
                                                         @fa.LibelleProduit
                                                     </h5>
                                                     <div class="options">
-                                                        <h6>
+                                                        <h6 id="prixproduit_@fa.IdProduit">
                                                             @fa.Prix DH
                                                         </h6>
-                                                        <a href="">
+                                                        <a onclick="CreateProduit(@fa.IdProduit)">
                                                             <i class="fa fa-check-circle" aria-hidden="false"></i>
                                                         </a>
                                                     </div>
@@ -55,6 +56,41 @@
         </div>
     </div>
 </div>
+<form method="post" action="/Commande/AjouterCommande">
+<aside id="moncard" class="cart-menu"style="visibility:hidden">
+    <!--bloquer la page de ne pas reloader -->
+    <a id="cart-button" class="button" href="javascript:void(0)" style="opacity: 1;">
+        <span>Commandes</span>
+        <b id="cpt">(0)</b>
+    </a>
+    <div class="cart-dialog">
+        <div class="widget woocommerce widget_shopping_cart">
+            <h2 class="widgettitle">Cart</h2>
+            <div class="widget_shopping_cart_content" style="opacity: 1;">
+                
+                <ul id="contentul"class="woocommerce-mini-cart cart_list product_list_widget ">
+                   
+                </ul>
+
+                <p class="woocommerce-mini-cart__total total">
+                    <strong>Total Commande:</strong>
+                    <span class="woocommerce-Price-amount amount">
+
+                    <span id="total">0</span> 
+                    <span class="woocommerce-Price-currencySymbol">DH
+                </span>
+                    </span>
+                </p>
+                <p class="woocommerce-mini-cart__buttons buttons">
+                        <button type="submit" class="button checkout wc-forward btn btn-info btn-fw"> Valider</button>
+                </p>
+                    
+            </div>
+        </div>
+    </div>
+
+</aside>
+</form>
 <script>
     //optimiser sidebar
     document.body.classList.add("sidebar-icon-only");

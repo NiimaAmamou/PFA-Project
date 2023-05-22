@@ -31,8 +31,10 @@
                                 <th>Famille de Produit</th>
                                 <th>Article de Produit</th>
                                 <th>Quantite</th>
+                                <th>Actions</th>
 
                             </tr>
+                            </thead>
                             @foreach (FamilleProduit pr in Model)
                             {
                               
@@ -46,7 +48,7 @@
                                     <td>@pr.LibelleFamille</td>
                                     <td>@foreach(ArticleProduit ar in pr.articleProduits)
                                         {
-                                            <ul><li>Libelle: @ar.article.LibelleArticle</li
+                                            <ul><li>Libelle: @ar.article.LibelleArticle</li>
                                                 
                                             </ul>
                                         }
@@ -55,8 +57,6 @@
                                         {
                                           <td>@ar.Quantite</td>  
                                         }
-                                   
-                                   
                                     <td>
                                         <center>
                                             <a href="/Produit/EditProduit/@pr.IdProduit" class="text-success">
@@ -68,7 +68,7 @@
                                     </td>
                                 </tr>
                             }
-                        </thead>
+                        
 
                     </table>
                 </div>
