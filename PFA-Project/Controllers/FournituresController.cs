@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PFA_Project.Models;
@@ -6,6 +7,7 @@ using PFA_Project.ModelViews;
 
 namespace PFA_Project.Controllers
 {
+    [Authorize]
     public class FournituresController : Controller
     {
         public ApplicationContext db;

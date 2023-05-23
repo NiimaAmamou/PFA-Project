@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PFA_Project.Models;
 using System.Drawing;
 
 namespace PFA_Project.Controllers
 {
+    [Authorize]
     public class FamilleController : Controller
     {
         public ApplicationContext db;

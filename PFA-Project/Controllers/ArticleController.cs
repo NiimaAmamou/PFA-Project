@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PFA_Project.Models;
 using System.Reflection.Metadata.Ecma335;
 //test
 namespace PFA_Project.Controllers
 {
+    [Authorize]
     public class ArticleController : Controller
     {
         public ApplicationContext db;

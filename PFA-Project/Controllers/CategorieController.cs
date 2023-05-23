@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 using PFA_Project.Models;
 
 namespace PFA_Project.Controllers
 {
+    [Authorize]
     public class CategorieController : Controller
     {
         public ApplicationContext db;

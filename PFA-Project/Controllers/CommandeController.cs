@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PFA_Project.Models;
 
 namespace PFA_Project.Controllers
 {
+    [Authorize]
     public class CommandeController : Controller
     {
         public ApplicationContext db;

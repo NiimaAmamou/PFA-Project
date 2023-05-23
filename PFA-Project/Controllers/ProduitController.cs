@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 
 namespace PFA_Project.Controllers
 {
+    [Authorize]
     public class ProduitController : Controller
     {
         public List<Famille> famillesCache;
