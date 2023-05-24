@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 namespace PFA_Project.Controllers
 {
     //You can only enter home if you are logged in
-    [Authorize]
+  
     public class HomeController : Controller
     {
         public List<Famille> famillesCache;

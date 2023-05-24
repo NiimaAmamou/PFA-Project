@@ -2,11 +2,8 @@
 
 namespace PFA_Project.Models
 {
-    public class Admin
+    public class Admin:Employee
     {
-        [Key]
-        public int Id { get; set; }
-        public string ? Login { get; set; }
-        public string ?Password { get; set; }
+       
     }
 }
