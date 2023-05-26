@@ -8,7 +8,7 @@ namespace PFA_Project.Models
              public int Id { get; set; }
              public DateTime Datecmd { get; set; }
              public bool Encaisse { get; set; }
-        public String ?Etat { get; set; }
+        public string ?Etat { get; set; }
         public List<LigneCommande> ?lignecommande { get; set; }
 
     }
