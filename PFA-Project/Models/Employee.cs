@@ -14,11 +14,11 @@ namespace PFA_Project.Models
         public int Heure_Travail { get; set; }
         public int Heure_Sup { get; set; }
         public string Description { get; set; }
-        public Boolean Disponibilite { get; set; }
+        public bool Disponibilite { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
         public double RecetteServ { get; set; }
         public int NbrExperience { get; set; }
-        public String Role { get; set; }
+        public string Role { get; set; }
     }
 }
