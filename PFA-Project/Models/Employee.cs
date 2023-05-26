@@ -8,7 +8,7 @@ namespace PFA_Project.Models
         public int Id { get; set; }
         public string Nom { get; set; }
         public string Prenom { get; set; }
-        public string Date_naissance { get; set; }
+        public DateTime Date_naissance { get; set; }
         public string email { get; set; }
         public double Salaire { get; set; }
         public int Heure_Travail { get; set; }
