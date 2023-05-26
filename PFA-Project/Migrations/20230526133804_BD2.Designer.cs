@@ -12,8 +12,8 @@ using PFA_Project;
 namespace PFA_Project.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230520143641_AjtLigneCommande")]
-    partial class AjtLigneCommande
+    [Migration("20230526133804_BD2")]
+    partial class BD2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -119,12 +119,74 @@ namespace PFA_Project.Migrations
                     b.Property<bool>("Encaisse")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("Etat")
-                        .HasColumnType("bit");
+                    b.Property<string>("Etat")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Commandes");
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Date_naissance")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disponibilite")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Heure_Sup")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Heure_Travail")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NbrExperience")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Prenom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("RecetteServ")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Salaire")
+                        .HasColumnType("float");
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("PFA_Project.Models.Famille", b =>
@@ -211,10 +273,6 @@ namespace PFA_Project.Migrations
                     b.Property<int>("CommandeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<float>("Prix")
                         .HasColumnType("real");
 
@@ -288,6 +346,34 @@ namespace PFA_Project.Migrations
                     b.ToTable("Tables");
                 });
 
+            modelBuilder.Entity("PFA_Project.Models.Admin", b =>
+                {
+                    b.HasBaseType("PFA_Project.Models.Employee");
+
+                    b.ToTable("Admins", (string)null);
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Caissier", b =>
+                {
+                    b.HasBaseType("PFA_Project.Models.Employee");
+
+                    b.ToTable("Caissiers", (string)null);
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Cuisinier", b =>
+                {
+                    b.HasBaseType("PFA_Project.Models.Employee");
+
+                    b.ToTable("Cuisiniers", (string)null);
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Serveur", b =>
+                {
+                    b.HasBaseType("PFA_Project.Models.Employee");
+
+                    b.ToTable("Serveurs", (string)null);
+                });
+
             modelBuilder.Entity("PFA_Project.Models.Article", b =>
                 {
                     b.HasOne("PFA_Project.Models.Categorie", null)
@@ -355,6 +441,42 @@ namespace PFA_Project.Migrations
                         .HasForeignKey("familleId");
 
                     b.Navigation("famille");
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Admin", b =>
+                {
+                    b.HasOne("PFA_Project.Models.Employee", null)
+                        .WithOne()
+                        .HasForeignKey("PFA_Project.Models.Admin", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Caissier", b =>
+                {
+                    b.HasOne("PFA_Project.Models.Employee", null)
+                        .WithOne()
+                        .HasForeignKey("PFA_Project.Models.Caissier", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Cuisinier", b =>
+                {
+                    b.HasOne("PFA_Project.Models.Employee", null)
+                        .WithOne()
+                        .HasForeignKey("PFA_Project.Models.Cuisinier", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Serveur", b =>
+                {
+                    b.HasOne("PFA_Project.Models.Employee", null)
+                        .WithOne()
+                        .HasForeignKey("PFA_Project.Models.Serveur", "Id")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PFA_Project.Models.Article", b =>

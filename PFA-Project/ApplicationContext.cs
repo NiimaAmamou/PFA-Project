@@ -25,7 +25,8 @@ namespace PFA_Project
         public DbSet<Serveur> Serveurs { get; set; }
         public DbSet<Cuisinier> Cuisiniers { get; set; }
         public DbSet<Caissier> Caissiers { get; set; }
-        public DbSet<Employee>Employee { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Admin>().ToTable("Admins");

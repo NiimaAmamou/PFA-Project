@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace PFA_Project.Migrations
 {
-    public partial class CreationBd : Migration
+    public partial class BD2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,6 +20,47 @@ namespace PFA_Project.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.IdCategorie);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Commandes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Datecmd = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Encaisse = table.Column<bool>(type: "bit", nullable: false),
+                    Etat = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Commandes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nom = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Prenom = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date_naissance = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Salaire = table.Column<double>(type: "float", nullable: false),
+                    Heure_Travail = table.Column<int>(type: "int", nullable: false),
+                    Heure_Sup = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Disponibilite = table.Column<bool>(type: "bit", nullable: false),
+                    Login = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RecetteServ = table.Column<double>(type: "float", nullable: false),
+                    NbrExperience = table.Column<int>(type: "int", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -89,6 +131,70 @@ namespace PFA_Project.Migrations
                         column: x => x.CategorieIdCategorie,
                         principalTable: "Categories",
                         principalColumn: "IdCategorie");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Admins",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Admins", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Admins_Employees_Id",
+                        column: x => x.Id,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Caissiers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Caissiers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Caissiers_Employees_Id",
+                        column: x => x.Id,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cuisiniers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cuisiniers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cuisiniers_Employees_Id",
+                        column: x => x.Id,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Serveurs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Serveurs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Serveurs_Employees_Id",
+                        column: x => x.Id,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -167,6 +273,34 @@ namespace PFA_Project.Migrations
                         principalColumn: "IdProduit");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "LigneCommande",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProduitId = table.Column<int>(type: "int", nullable: false),
+                    CommandeId = table.Column<int>(type: "int", nullable: false),
+                    Quantite = table.Column<int>(type: "int", nullable: true),
+                    Prix = table.Column<float>(type: "real", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LigneCommande", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LigneCommande_Commandes_CommandeId",
+                        column: x => x.CommandeId,
+                        principalTable: "Commandes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LigneCommande_Produits_ProduitId",
+                        column: x => x.ProduitId,
+                        principalTable: "Produits",
+                        principalColumn: "IdProduit",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ArticleProduits_articleIdArticle",
                 table: "ArticleProduits",
@@ -193,6 +327,16 @@ namespace PFA_Project.Migrations
                 column: "IdFournisseur");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LigneCommande_CommandeId",
+                table: "LigneCommande",
+                column: "CommandeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LigneCommande_ProduitId",
+                table: "LigneCommande",
+                column: "ProduitId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Produits_familleId",
                 table: "Produits",
                 column: "familleId");
@@ -201,16 +345,28 @@ namespace PFA_Project.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Admins");
+
+            migrationBuilder.DropTable(
                 name: "ArticleProduits");
+
+            migrationBuilder.DropTable(
+                name: "Caissiers");
+
+            migrationBuilder.DropTable(
+                name: "Cuisiniers");
 
             migrationBuilder.DropTable(
                 name: "Fournitures");
 
             migrationBuilder.DropTable(
-                name: "Tables");
+                name: "LigneCommande");
 
             migrationBuilder.DropTable(
-                name: "Produits");
+                name: "Serveurs");
+
+            migrationBuilder.DropTable(
+                name: "Tables");
 
             migrationBuilder.DropTable(
                 name: "Articles");
@@ -219,10 +375,19 @@ namespace PFA_Project.Migrations
                 name: "Fournisseurs");
 
             migrationBuilder.DropTable(
-                name: "Familles");
+                name: "Commandes");
+
+            migrationBuilder.DropTable(
+                name: "Produits");
+
+            migrationBuilder.DropTable(
+                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Familles");
         }
     }
 }

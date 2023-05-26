@@ -184,7 +184,7 @@ namespace PFA_Project.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employee");
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("PFA_Project.Models.Famille", b =>
