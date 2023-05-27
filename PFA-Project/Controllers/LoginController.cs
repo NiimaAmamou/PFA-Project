@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace PFA_Project.Controllers
 {
-    public class LoginController : Controller
+  /*  public class LoginController : Controller
     {
         public ApplicationContext db;
 
@@ -24,40 +24,40 @@ namespace PFA_Project.Controllers
         public IActionResult Login()
         {
             ClaimsPrincipal claimUser = HttpContext.User;
-            if(claimUser.Identity.IsAuthenticated)
+            if (claimUser.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(Admin admin)
-        {
-            if(ModelState.IsValid)
-            {
-                Admin a = db.Admins.Where(a => a.Login.Equals(admin.Login) && a.Password.Equals(admin.Password)).FirstOrDefault();
-                if(a!=null)
-                {
-                    List<Claim> claims=new List<Claim>
-                    {
-                        new Claim(ClaimTypes.NameIdentifier,admin.Login),
-                        
-                    };
-                    ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    AuthenticationProperties properties = new AuthenticationProperties()
-                    {
-                        AllowRefresh = true,
-                    };
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), properties);
-                    return RedirectToAction("Index","Home");
-                }
-                else
-                {
-                    ViewBag["validateMess"] = "User not found";
-                    return View();
-                }
-            }
-            return View();
-        }
-    }
+        /* public async Task<IActionResult> Login(Admin admin)
+         {
+             if(ModelState.IsValid)
+             {
+                 Admin a = db.Admins.Where(a => a.Login.Equals(admin.Login) && a.Password.Equals(admin.Password)).FirstOrDefault();
+                 if(a!=null)
+                 {
+                     List<Claim> claims=new List<Claim>
+                     {
+                         new Claim(ClaimTypes.NameIdentifier,admin.Login),
+
+                     };
+                     ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                     AuthenticationProperties properties = new AuthenticationProperties()
+                     {
+                         AllowRefresh = true,
+                     };
+                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), properties);
+                     return RedirectToAction("Index","Home");
+                 }
+                 else
+                 {
+                     ViewBag["validateMess"] = "User not found";
+                     return View();
+                 }
+             }
+             return View();
+         }
+    }*/
 }

@@ -3,6 +3,12 @@
 @{
     ViewData["Title"] = "Menu";
 }
+
+<script>
+    function showalert(){
+        alert("Article n'est pas disponible");
+    }
+    </script>
 <!-- Custom styles for this template -->
 <link href="~/menu/css/style.css" rel="stylesheet" />
 <link rel="stylesheet" href="/css/stylecart.css" />
@@ -25,16 +31,28 @@
                             }
                         </ul>
                         <div class="filters-content">
+                            @{
+                                bool dispo = true;
+                            }
                             <div class="row grid">
                                 @foreach (FamilleProduit fa in Model)
-                                {
+                                { 
+                                    @foreach (Article a in fa.articles)
+                                    {
+                                        if (a.QteStock==0)
+                                        {
+                                            dispo = false;
+                                            break;
+                                        }
+
+                                    }
                                     <div class="col-sm-6 col-lg-3 all @fa.LibelleFamille.ToLower()">
                                         <div class="box">
                                             <div>
                                                 <div class="img-box">
                                                     <img src="/ImgProduit/@fa.Image" alt="@fa.LibelleFamille.ToLower()" id="imgpr_@fa.IdProduit">
                                                 </div>
-                                                <div class="detail-box">
+                                                <div class="@(dispo==false?"bg-warning":"") detail-box">
                                                     <h5 id="libelleproduit_@fa.IdProduit">
                                                         @fa.LibelleProduit
                                                     </h5>
@@ -42,9 +60,19 @@
                                                         <h6 id="prixproduit_@fa.IdProduit">
                                                             @fa.Prix DH
                                                         </h6>
-                                                        <a onclick="CreateProduit(@fa.IdProduit)">
-                                                            <i class="fa fa-check-circle" aria-hidden="false"></i>
-                                                        </a>
+                                                        @if(dispo==false)
+                                                        {
+                                                            <a onclick="showalert();">
+                                                                <i class="fa fa-check-circle" aria-hidden="false"></i>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a onclick="CreateProduit(@fa.IdProduit)">
+                                                                <i class="fa fa-check-circle" aria-hidden="false"></i>
+                                                            </a>
+                                                        }
+                                                       
                                                     </div>
                                                 </div>
                                             </div>
@@ -94,6 +122,29 @@
 
 </aside>
 </form>
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title text-warning"><i class="fa fa-exclamation-triangle"></i> Attention</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                Article n'est pas disponible
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 <script>
     //optimiser sidebar
     document.body.classList.add("sidebar-icon-only");

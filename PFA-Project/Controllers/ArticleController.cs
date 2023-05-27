@@ -6,7 +6,7 @@ using System.Reflection.Metadata.Ecma335;
 //test
 namespace PFA_Project.Controllers
 {
-    [Authorize]
+
     public class ArticleController : Controller
     {
         public ApplicationContext db;

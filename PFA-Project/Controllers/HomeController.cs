@@ -41,6 +41,7 @@ namespace PFA_Project.Controllers
                    Prix = outpout.Produit.Prix,
                    Image = outpout.Produit.Image,
                    LibelleFamille = outpout.Famille.Libelle,
+                   articles = db.Articles.Join(db.ArticleProduits, a => a.IdArticle, ap => ap.IdArticle, (Article, ArticleProduit) => new { Article = Article, ArticleProduit = ArticleProduit }).Where(p=>p.ArticleProduit.IdProduit==outpout.Produit.IdProduit).Select(x => x.Article).ToList()
 
                })
             .ToList();
