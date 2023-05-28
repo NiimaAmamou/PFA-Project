@@ -9,79 +9,86 @@
 
                 <form class="forms-sample" method="post">
                     <div asp-validation-summary="All" />
-                    <div class="form-group">
-                        <label for="ref">Article</label>
-                        <select id="role" asp-for="Role" asp-items="@ViewBag.Roles"></select>>
+                    <div style="@(ViewBag.role!=null ? "display:none;" : " ")" class="form-group">
+                        <label for="ref">Role</label>
+                        <select class="form-control" id="role" asp-for="Role" asp-items="@ViewBag.EmpRoles"></select>
                     </div>
-@*                    @{
-                        string selectedRole = Model.Role;
-                    }*@
-                    <div class="form-group">
-                        <label for="ref">Nom</label>
-                        <input class="form-control" asp-for="Nom">
+                    <div style="@(ViewBag.role==null ? "display:none;" : "display:block;")" class="form-group">
+                        <label for="ref">Role</label>
+                        <input class="form-control" asp-for="Role" value="@ViewBag.role">
                         <span asp-validation-for="Nom"></span>
                     </div>
-                    <div class="form-group">
+                    <div style="@(ViewBag.role==null ? "display:none;" : " ")" class="form-group">
+                        <label for="ref">Nom</label>
+                        <input  class="form-control" asp-for="Nom">
+                        <span asp-validation-for="Nom"></span>
+                    </div>
+                    <div style="@(ViewBag.role==null ? "display:none;" : " ")" class="form-group">
                         <label for="ref">Prenom</label>
                         <input class="form-control" asp-for="Prenom">
                         <span asp-validation-for="Prenom"></span>
                     </div>
-                    <div class="form-group">
+                    <div style="@(ViewBag.role==null ? "display:none;" : " ")" class="form-group">
                         <label for="ref">Date de naissance</label>
                         <input class="form-control" asp-for="Date_naissance">
                         <span asp-validation-for="Date_naissance"></span>
                     </div>
-                    <div class="form-group">
+                    <div style="@(ViewBag.role==null ? "display:none;" : " ")" class="form-group">
                         <label for="ref">Email</label>
                         <input class="form-control" asp-for="email">
                         <span asp-validation-for="email"></span>
                     </div>
-                    <div class="form-group">
+                    <div style="@(ViewBag.role==null ? "display:none;" : " ")" class="form-group">
                         <label for="ref">Salaire</label>
                         <input class="form-control" asp-for="Salaire">
                         <span asp-validation-for="Salaire"></span>
                     </div>
-                    <div class="form-group">
+                    <div style="@(ViewBag.role==null ? "display:none;" : " ")" class="form-group">
                         <label for="ref">Heure de Travail</label>
                         <input class="form-control" asp-for="Heure_Travail">
                         <span asp-validation-for="Heure_Travail"></span>
                     </div>
-                    <div class="form-group">
+                    <div style="@(ViewBag.role==null ? "display:none;" : " ")" class="form-group">
                         <label for="ref">Heure Sup</label>
                         <input class="form-control" asp-for="Heure_Sup">
                         <span asp-validation-for="Heure_Sup"></span>
                     </div>
-                    <div class="form-group">
+                    <div style="@(ViewBag.role==null ? "display:none;" : " ")" class="form-group">
                         <label for="ref">Login</label>
                         <input class="form-control" asp-for="Login">
                         <span asp-validation-for="Login"></span>
                     </div>
-                    <div class="form-group">
+                    <div style="@(ViewBag.role==null ? "display:none;" : " ")" class="form-group">
                         <label for="ref">Password</label>
                         <input class="form-control" asp-for="Password">
                         <span asp-validation-for="Password"></span>
                     </div>
-                    <div class="form-group">
+                    <div style="@(ViewBag.role==null ? "display:none;" : " ")" class="form-group">
                         <label for="ref">Comirmer le password</label>
                         <input class="form-control" asp-for="ConfirmationPass">
                         <span asp-validation-for="ConfirmationPass"></span>
                     </div>
-                    <div class="form-group">
+                    <div style="@(ViewBag.role==null || ViewBag.role!="Serveur" ? "display:none;" : " ")" class="form-group">
                         <label for="ref">Recette du serveur</label>
-                        <input style="@(Model.Role != null && Model.Role.Equals("Serveur", StringComparison.OrdinalIgnoreCase) ? "display: none;" : "")" class="form-control" asp-for="RecetteServ">
+                        <input class="form-control" asp-for="RecetteServ">
                         <span asp-validation-for="RecetteServ"></span>
                     </div>
-                    <div class="form-group">
+                    <div style="@(ViewBag.role==null || ViewBag.role!="Cuisinier" ? "display:none;" : " ")" class="form-group">
                         <label for="ref">Nombre d'experience'</label>
                         <input class="form-control" asp-for="NbrExperience">
                         <span asp-validation-for="NbrExperience"></span>
                     </div>
-                    <div class="form-group">
+                    <div style="@(ViewBag.role==null ? "display:none;" : " ")" class="form-group">
                         <label for="ref">Description</label>
                         <input class="form-control" asp-for="Description">
                         <span asp-validation-for="Description"></span>
                     </div>
-                    <div class="template-demo mt-2">
+                    <div style="@(ViewBag.role!=null ? "display:none;" : " ")" class="template-demo mt-2">
+                        <button type="submit" class="btn btn-outline-primary btn-icon-text">
+                            <i class="mdi mdi-file-check btn-icon-prepend"></i> Valider
+                        </button>
+                    </div>
+                    <div style="@(ViewBag.role==null ? "display:none;" : " ")" class="template-demo mt-2">
                         <button type="submit" class="btn btn-outline-primary btn-icon-text">
                             <i class="mdi mdi-file-check btn-icon-prepend"></i> Ajouter
                         </button>
