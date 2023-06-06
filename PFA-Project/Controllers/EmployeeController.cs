@@ -11,13 +11,16 @@ namespace PFA_Project.Controllers
         {
             this.db = db;
         }
-        public IActionResult Ajouter()
+        public IActionResult RecupererRole()
         {
-            ViewBag.EmpRoles=new SelectList(new[] { "Serveur", "Cuisinier", "Caissier", "Admin" });
+            ViewBag.EmpRoles = new SelectList(new[] { "Serveur", "Cuisinier", "Caissier", "Admin" });
             return View();
         }
         [HttpPost]
-        [Route("Employee/Ajouter")]
+        public IActionResult RecupererRole(Employee employee)
+        {
+            return RedirectToAction("Ajouter", employee.Role);
+        }
         public IActionResult Ajouter(String Role)
         {
             ViewBag.role=Role;
@@ -25,8 +28,8 @@ namespace PFA_Project.Controllers
         }
 
         [HttpPost]
-        [Route("Employee/Ajouter",Order =1)]
-        public IActionResult Ajouter(Employee employee)
+        [Route("Employee/Ajouter")]
+        public IActionResult AjouterEmp(Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -35,6 +38,11 @@ namespace PFA_Project.Controllers
             }
             return RedirectToAction("Ajouter");
         }
-
+        public IActionResult List()
+        {
+            ViewBag.EmpRoles = new SelectList(new[] { "Tous","Serveur", "Cuisinier", "Caissier", "Admin" });
+            List<Employee> employees = db.Employees.ToList();
+            return View();
+        }*/
     }
 }

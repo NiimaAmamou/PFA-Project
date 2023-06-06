@@ -1,0 +1,63 @@
+﻿@model List<Employee>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <p>
+                        <a class="btn btn-primary btn-rounded btn-icon" asp-action="Ajouter" asp-controller="Employee">
+                            <i class="mdi mdi-cart-plus"></i>
+                        </a>
+                    </p>
+                    <div style="@(ViewBag.role!=null ? "display:none;" : " ")" class="form-group">
+                        <label for="ref">Role</label>
+                        <select class="form-control" id="role" asp-items="@ViewBag.EmpRoles" onchange="selectEmp()">
+                        </select>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Id Employee</th>
+                                <th>Nom</th>
+                                <th>Prenom</th>
+                                <th>Date de naissance</th>
+                                <th>Email</th>
+                                <th>Salaire</th>
+                                <th>Heure de travaille</th>
+                                <th>Heure supp</th>
+                                <th>Email</th>
+                                <th>Login</th>
+                                <th>Password</th>
+                                
+                                <th>Recette</th>
+                                <th>Nombre d'experience'</th>
+                                <th>Role</th>
+                            </tr>
+@*                            @foreach (Fournisseur fournisseur in Model)
+                            {
+                                <tr>
+                                    <td>@fournisseur.Id</td>
+                                    <td>@fournisseur.Nom</td>
+                                    <td>@fournisseur.Adresse</td>
+                                    <td>@fournisseur.N_Tel</td>
+                                    <td>@fournisseur.Email</td>
+                                    <td>@fournisseur.Statut</td>
+                                    <td><a class="btn btn-danger" asp-controller="Fournisseur" asp-action="Supprimer" asp-route-id="@fournisseur.Id">Supprimer</a></td>
+                                    <td><a class="btn btn-outline-secondary" asp-controller="Fournisseur" asp-action="Modifier" asp-route-id="@fournisseur.Id">Modifier</a></td>
+                                </tr>
+                            }*@
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function selectEmp()
+    {
+        var selectEmp=document.getElementById("role").value;
+
+        
+    }
+</script>
