@@ -25,7 +25,9 @@ namespace PFA_Project.Models
         
             public int ?Heure_Sup { get; set; }
             public string ?Description { get; set; }
-            public bool Disponibilite { get; set; }
+            [Display(Name = "Disponibilité")]
+            [UIHint("Checkbox")]
+        public bool Disponibilite { get; set; }
             [Required]
             public string Login { get; set; }
             [Required]

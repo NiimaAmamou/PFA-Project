@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="~/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
     <link rel="stylesheet" href="~/assets/css/style.css" />
     <link rel="shortcut icon" href="~/assets/images/favicon.png" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="~/Card/stylecart.css"/>
     <style type="text/css">
         .sidebar {
@@ -85,7 +86,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/Employes/List">
+                    <a class="nav-link" href="/Employee/List">
                         <i class=" mdi mdi-account-multiple menu-icon"></i>
                         <span class="menu-title"> Employes</span>
                     </a>
@@ -236,6 +237,7 @@
             <div class="main-panel">
                 <div class="content-wrapper">
                     @RenderBody()
+                    @RenderSection("Scripts", required: false)
                 </div>
                 <footer class="footer">
                     <div class="d-sm-flex justify-content-center justify-content-sm-between">

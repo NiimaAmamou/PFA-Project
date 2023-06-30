@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PFA_Project.Models;
+using System.Data;
 
 namespace PFA_Project.Controllers
 {
@@ -19,7 +20,7 @@ namespace PFA_Project.Controllers
         [HttpPost]
         public IActionResult RecupererRole(Employee employee)
         {
-            return RedirectToAction("Ajouter", employee.Role);
+            return RedirectToAction("Ajouter", new { Role = employee.Role });
         }
         public IActionResult Ajouter(String Role)
         {
@@ -28,21 +29,57 @@ namespace PFA_Project.Controllers
         }
 
         [HttpPost]
-        [Route("Employee/Ajouter")]
-        public IActionResult AjouterEmp(Employee employee)
+        public IActionResult Ajouter(Employee employee)
         {
             if (ModelState.IsValid)
             {
-                db.Employees.Add(employee);
-                db.SaveChanges();
+                if(employee.Password==employee.ConfirmationPass)
+                {
+                    db.Employees.Add(employee);
+                    db.SaveChanges();
+                }
             }
-            return RedirectToAction("Ajouter");
+            return RedirectToAction("RecupererRole");
         }
         public IActionResult List()
         {
-            ViewBag.EmpRoles = new SelectList(new[] { "Tous","Serveur", "Cuisinier", "Caissier", "Admin" });
-            List<Employee> employees = db.Employees.ToList();
+            ViewBag.EmpRoles = new SelectList(new[] {"Selectionner le role ","Serveur", "Cuisinier", "Caissier"});
+            //List<Employee> employees = db.Employees.ToList();
             return View();
-        }*/
+        }
+
+        public IActionResult Supprimer(int? id)
+        {
+            Employee employee = db.Employees.Find(id);
+            if (employee != null)
+            {
+                db.Employees.Remove(employee);
+                db.SaveChanges();
+            }
+            return RedirectToAction("List");
+        }
+        public IActionResult Modifier(int? id)
+        {
+            Employee employee = db.Employees.Find(id);
+            ViewBag.role = employee.Role;
+            if (id == null || employee == null)
+            {
+                return RedirectToAction("List");
+            }
+            return View(employee);
+        }
+        [HttpPost]
+        public IActionResult Modifier(Employee employee)
+        {
+            if (ModelState.IsValid)
+            {
+                if (employee.Password == employee.ConfirmationPass)
+                {
+                    db.Update(employee);
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("List");
+        }
     }
 }

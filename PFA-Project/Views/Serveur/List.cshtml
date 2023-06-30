@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "";
+}
+@model List<Employee>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id Employee</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Date de naissance</th>
+            <th>Email</th>
+            <th>Salaire</th>
+            <th>Heure de travaille</th>
+            <th>Login</th>
+            <th>Password</th>
+            <th>Disponibilite</th>
+            <th>Role</th>
+            <th>Action</th>
+        </tr>
+        @foreach (Employee employee in Model)
+        {
+
+            <tr>
+                <td>@employee.Role</td>
+                <td>@employee.Nom</td>
+                <td>@employee.Prenom</td>
+                <td>@employee.Date_naissance</td>
+                <td>@employee.email</td>
+                <td>@employee.Salaire</td>
+                <td>@employee.Heure_Travail</td>
+                <td>@employee.Login</td>
+                <td>@employee.Password</td>
+                <td>@employee.Disponibilite</td>
+                <td>@employee.Role</td>
+                <td>
+                    <a class="btn btn-danger" asp-controller="Employee" asp-action="Supprimer" asp-route-id="@employee.Id" onclick="return(confirm('Etes-vous sûr de vouloir supprimer ?'));">Supprimer</a>
+                <a class="btn btn-outline-secondary" asp-controller="Employee" asp-action="Modifier" asp-route-id="@employee.Id">Modifier</a></td>
+            </tr>
+        }
+    </thead>
+</table>
