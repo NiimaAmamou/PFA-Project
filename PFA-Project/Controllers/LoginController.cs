@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using PFA_Project.Models;
+using PFA_Project.ModelViews;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
 
 namespace PFA_Project.Controllers
 {
-  /*  public class LoginController : Controller
+public class LoginController : Controller
     {
         public ApplicationContext db;
 
@@ -31,16 +32,16 @@ namespace PFA_Project.Controllers
             return View();
         }
         [HttpPost]
-        /* public async Task<IActionResult> Login(Admin admin)
+         public async Task<IActionResult> Login(EmployeeViews e)
          {
              if(ModelState.IsValid)
              {
-                 Admin a = db.Admins.Where(a => a.Login.Equals(admin.Login) && a.Password.Equals(admin.Password)).FirstOrDefault();
+                 Employee a = db.Employees.Where(a => a.Login.Equals(e.Login) && a.Password.Equals(e.Password)).FirstOrDefault();
                  if(a!=null)
                  {
                      List<Claim> claims=new List<Claim>
                      {
-                         new Claim(ClaimTypes.NameIdentifier,admin.Login),
+                         new Claim(ClaimTypes.NameIdentifier,e.Login),
 
                      };
                      ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -49,15 +50,22 @@ namespace PFA_Project.Controllers
                          AllowRefresh = true,
                      };
                  await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), properties);
-                     return RedirectToAction("Index","Home");
+                        if(a.Role=="Caissier")
+                        {
+                        return RedirectToAction("List", "Caissier");
+                        }
+                        else if(a.Role=="Serveur")
+                        {
+                        return RedirectToAction("List", "Table");
+                        }
                  }
                  else
                  {
                      ViewBag["validateMess"] = "User not found";
-                     return View();
+                     return View(e);
                  }
              }
              return View();
          }
-    }*/
+    }
 }
