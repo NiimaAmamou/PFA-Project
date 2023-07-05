@@ -31,6 +31,8 @@ namespace PFA_Project.Controllers
         }
         public IActionResult Index()
         {
+            //la liste des serveurs dans la carde
+            ViewBag.Serveurs = db.Employees.Where(e => e.Role == "Serveur" && e.Disponibilite == true).ToList();
             VerifierCache();
             ViewBag.familles = famillesCache;
             List<FamilleProduit> produits = famillesCache.Join(db.Produits, p => p.Id, f => f.IdFamille, (Famille, Produit) => new { Famille = Famille, Produit = Produit })

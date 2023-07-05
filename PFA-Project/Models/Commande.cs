@@ -10,6 +10,7 @@ namespace PFA_Project.Models
              public bool Encaisse { get; set; }
         public string ?Etat { get; set; }
         public List<LigneCommande> ?lignecommande { get; set; }
+        public Employee ?Emp { get; set; }
 
     }
 }

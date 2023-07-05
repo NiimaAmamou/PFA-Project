@@ -56,7 +56,7 @@ public class LoginController : Controller
                         }
                         else if(a.Role=="Serveur")
                         {
-                        return RedirectToAction("List", "Table");
+                        return RedirectToAction("ListTable", "Table");
                         }
                  }
                  else

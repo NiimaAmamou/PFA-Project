@@ -115,8 +115,18 @@
                 <p class="woocommerce-mini-cart__buttons buttons">
                         <button type="submit" class="button checkout wc-forward btn btn-info btn-fw"> Valider</button>
                 </p>
-                    
-            </div>
+                    <hr />
+                    @{
+                        List<Employee> employees = (List<Employee>)(ViewBag.Serveurs);
+                    }
+                    <ul>
+                        @foreach (Employee em in employees)
+                        {
+                            <li> @em.Nom @em.Prenom</li>
+                            
+                        }
+                    </ul>
+                </div>
         </div>
     </div>
 

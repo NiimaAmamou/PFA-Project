@@ -39,6 +39,7 @@ namespace PFA_Project.Models
             public int ?NbrExperience { get; set; }
             [Required]
             public string Role { get; set; }
+        public List<Commande>?commandes { get; set; }    
         }
     }
 
