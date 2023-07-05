@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using PFA_Project.Filters;
 using PFA_Project.Models;
 using System.Reflection.Metadata.Ecma335;
 //test
 namespace PFA_Project.Controllers
 {
-
+    [AuthFilter("admin")]
+ 
     public class ArticleController : Controller
     {
         public ApplicationContext db;

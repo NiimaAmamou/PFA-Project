@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityRole>
+
+@{
+    ViewData["title"] = "Application Roles";
+}
+<div class="page-header">
+    <h3 class="page-title">Listes des Articles</h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Article/Create">Ajouter</a></li>
+
+        </ol>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <p>
+                        <a class="btn btn-primary btn-rounded btn-icon" asp-action="Create" asp-controller="Article">
+                            <i class="mdi mdi-cart-plus"></i>
+                        </a>
+                    </p>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                               <th>@Html.DisplayNameFor(model=>model.Id)</th>
+                            </tr>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model=>model.Name)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem=>item.Id)</td>
+                                    <td>@Html.DisplayFor(modelItem=>item.Name)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

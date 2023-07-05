@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PFA_Project.Filters;
 using PFA_Project.Models;
 using System.Drawing;
 
 namespace PFA_Project.Controllers
 {
-    [Authorize]
+    [AuthFilter("admin")]
     public class FamilleController : Controller
     {
         public ApplicationContext db;
