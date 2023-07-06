@@ -2,12 +2,73 @@
 @{
     ViewBag.Title = "Modifier Produit Produit";
 }
+<script>
+    let articles = [];
+    function FindArticle(article_id) {
+        for (var i = 0; i < articles.length; i++) {
+            if (articles[i].id_article == article_id) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    function CreateArticle() {
+        var article = document.getElementById("id_article_prod");
+        var articleid = article.value;
+
+        var prixarticle = document.getElementById("pu_prod").value;
+        var articlelibelle = article.options[article.selectedIndex].text;
+        var quantiteart = document.getElementById("quantite_prod").value;
+        var pos = FindArticle(articleid);
+        if (pos == -1) {
+            var newArticle = {
+                id_article: articleid,
+                lib_article: articlelibelle,
+                quantite: quantiteart,
+            };
+
+            articles.push(newArticle);
+        }
+        else {//IF TASK Exist INcreas Duree
+            articles[pos].quantite = parseInt(articles[pos].quantite) + parseInt(quantiteart);
+        }
+        console.log(articles);
+        ReadArticles();
+    }
+    function SupprimerArticle(item) {
+        articles.splice(item, 1);
+        ReadArticles();
+    }
+    function ReadArticles() {
+        var data = '';
+        for (var i = 0; i < articles.length; i++) {
+            data += '<tr>';
+            data += '<td> ' + articles[i].lib_article + '<input type="hidden" value="' + articles[i].id_article + '" name="id_articles" /></td>';
+            //data += '<td> ' + articles[i].prixunitaire + '</td > ';
+            data += '<td>' + articles[i].quantite + '<input type="hidden" value="' + articles[i].quantite + '" name="quantites" /></td>';
+            data += '<td><button type="button" class="btn btn-primary btn-rounded btn-fw" onclick="SupprimerArticle(' + i + ')">Delete</button></td>';
+            data += '</tr>';
+        }
+        document.getElementById("Content_prod").innerHTML = data;
+        console.log(articles);
+    }
+    function loadData() {
+        let _articles = @Html.Raw(ViewBag.ProduitArticle);
+        for (var i = 0; i < _articles.length; i++) {
+            let newArticle = {
+                id_article: _articles[i].id_article,
+                lib_article: _articles[i].lib_article,
+                quantite: _articles[i].quantite
+            };
+            articles.push(newArticle);
+        }
+    }
+</script>
 <div class="page-header">
-    <h3 class="page-title">Ajouter  des Produits</h3>
+    <h3 class="page-title">Modifier  des Produits</h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/Produit/ListProduit">Retourner vers la liste des produits</a></li>
-
         </ol>
     </nav>
 </div>
@@ -19,17 +80,17 @@
                     Modifier un Produit
                 </h4>
 
-                <form class="forms-sample" method="post" enctype="multipart/form-data">
+                <form class="forms-sample" method="post" enctype="multipart/form-data" id="myForm">
                     <div asp-validation-summary="All" />
                     <input type="hidden" asp-for="IdProduit" />
                     <div class="form-group">
                         <label for="ref">Libélle</label>
-                        <input type="text" class="form-control" asp-for="LibelleProduit" placeholder="Libelle" />
+                        <input type="text" class="form-control" asp-for="LibelleProduit" placeholder="Libelle" id="libelle" />
                         <span asp-validation-for="LibelleProduit"></span>
                     </div>
                     <div class="form-group">
                         <label for="ref">Prix Unitaire</label>
-                        <input type="text" class="form-control" asp-for="Prix" placeholder="Prix" />
+                        <input type="text" class="form-control" asp-for="Prix" placeholder="Prix" id="pu_prod" />
                         <span asp-validation-for="Prix"></span>
                     </div>
                     <div class="form-group">
@@ -38,30 +99,50 @@
                         <input class="form-control" asp-for="image1" value="Image" />
                         <span asp-validation-for="image1"></span>
                     </div>
-
                     <div class="form-group">
-                        <label for="ref">Famille </label>
-                        <select asp-for="IdFamille" class="form-control" asp-items="@ViewBag.Familles"></select>
-                    </div
+                        <label>Famille </label>
+                        <select asp-for="IdFamille" class="form-control" asp-items="@ViewBag.Familles" id="famille"></select>
+                    </div>
+                    <hr />
+                    <br />
+                    <h4>Articles Details</h4>
                     <div class="form-group">
                         <label>Article </label>
-                        <select class="form-control" asp-items="@ViewBag.Articles" id="id_article"></select>
+                        <select class="form-control" asp-items="@ViewBag.Articles" id="id_article_prod"></select>
                     </div>
-                  
+
                     <div class="form-group">
                         <label for="ref">Quantite</label>
-                        @for (int i = 0; i < Model.produitArticles.Count; i++)
-                            {<input type="text" class="form-control"  placeholder="@Model.produitArticles[i].Quantite" id="quantite" />}
-                        
+                        <input type="text" class="form-control" placeholder="Quantite" id="quantite_prod" />
                     </div>
-                    
+                    <div class="template-demo mt-2">
+                        <input type="button" class="btn btn-primary btn-rounded btn-fw" value="Actualiser formulaire" onClick="fun()" />
+                        <button type="button" class="btn btn-primary btn-rounded btn-fw" onclick="CreateArticle()"> + </button>
+                    </div>
+                    <br />
+                    <h4>Les Articles</h4>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Libellé</th>
+                            @*                            <th>Prix Unitaire</th>
+                            *@
+                            <th>Quantité</th>
+                            <th width="70px">Actions</th>
+                        </tr>
+                        <tbody id="Content_prod">
+                        </tbody>
+                    </table>
+
                     <div class="template-demo mt-2">
                         <button type="submit" class="btn btn-primary btn-rounded btn-fw"> Modifier Produit </button>
-                       
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-<
+<script>
+    console.log("test");
+    loadData();
+    ReadArticles();
+</script>

@@ -4,6 +4,15 @@
 @{
 }
 @model List<Table>
+<div class="page-header">
+    <h3 class="page-title">Ajouter  une table</h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Table/ListTable">Retourner vers la liste</a></li>
+
+        </ol>
+    </nav>
+</div>
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
@@ -11,7 +20,7 @@
                 <div class="table-responsive">
                     <p>
                         <a class="btn btn-primary btn-rounded btn-icon" asp-action="Add" asp-controller="Table">
-                            <i class="mdi mdi-cart-plus"></i>
+                            <i class="mdi mdi-view-module"></i>
                         </a>
                     </p>
                     <table class="table table-bordered">

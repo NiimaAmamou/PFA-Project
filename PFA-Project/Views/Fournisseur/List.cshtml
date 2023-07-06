@@ -6,7 +6,7 @@
                 <div class="table-responsive">
                     <p>
                         <a class="btn btn-primary btn-rounded btn-icon" asp-action="Ajouter" asp-controller="Fournisseur">
-                            <i class="mdi mdi-cart-plus"></i>
+                            <i class="mdi mdi-comment-account"></i>
                         </a>
                     </p>
                     <table class="table table-bordered">
@@ -18,6 +18,7 @@
                                 <th>Nº Telephone</th>
                                 <th>Email</th>
                                 <th>Statut</th>
+                                <th>Actions</th>
                             </tr>
                             @foreach (Fournisseur fournisseur in Model)
                             {
@@ -28,9 +29,15 @@
                                     <td>@fournisseur.N_Tel</td>
                                     <td>@fournisseur.Email</td>
                                     <td>@fournisseur.Statut</td>
-                                    <td><a class="btn btn-danger" asp-controller="Fournisseur" asp-action="Supprimer" asp-route-id="@fournisseur.Id">Supprimer</a></td>
-                                    <td><a class="btn btn-outline-secondary" asp-controller="Fournisseur" asp-action="Modifier" asp-route-id="@fournisseur.Id">Modifier</a></td>
-                                </tr>
+                                    <td>
+                                        <center>
+                                            <a href="/Fournisseur/Modifier/@fournisseur.Id" class="text-success">
+                                                <i class="mdi mdi-table-edit"></i>
+                                            </a> |
+                                            <a href="/Fournisseur/Supprimer/@fournisseur.Id" onclick="return confirm('Voulez-Vous Supprimer?');" class="text-danger"><i class="mdi mdi-delete"></i></a>
+                                        </center>
+                                    </td>
+                                    </tr>
                             }
                         </thead>
                     </table>

@@ -25,7 +25,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="etaT">EtatTable</label>
-                                <input type="text" class="form-control" asp-for="EtatTable" placeholder="Etats De Table" />
+                                <select class="form-control" asp-for="EtatTable">
+                                    <option>Disponible</option>
+                                    <option>Reservée</option>
+                                </select>
                                 <span asp-validation-for="EtatTable"></span>
                             </div>
                             <div class="form-group">

@@ -3,10 +3,10 @@
     ViewBag.Title = "Liste des Categories";
 }
 <div class="page-header">
-    <h3 class="page-title">Listes des Categories</h3>
+    <h3 class="page-title">Listes des Catégories</h3>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/Categorie/CreateCategorie">Ajouter</a></li>
+            <li class="breadcrumb-item"><a href="/Categorie/CreateCategorie">Ajouter une Catégorie</a></li>
 
         </ol>
     </nav>
@@ -16,6 +16,11 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
+                    <p>
+                        <a class="btn btn-primary btn-rounded btn-icon" asp-action="CreateCategorie" asp-controller="Categorie">
+                            <i class="mdi mdi-shape-square-plus"></i>
+                        </a>
+                    </p>
 
                     <table class="table table-bordered">
                         <thead>

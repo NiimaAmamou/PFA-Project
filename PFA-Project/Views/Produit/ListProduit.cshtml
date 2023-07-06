@@ -34,42 +34,43 @@
                                 <th>Actions</th>
 
                             </tr>
-                            </thead>
-                            @foreach (FamilleProduit pr in Model)
-                            {
-                              
-                                var path = "/ImgProduit/" + pr.Image;
-                                <tr>
-                                    <td>@pr.IdProduit</td>
-                                    <td>@pr.LibelleProduit</td>
-                                    <td>@pr.Prix</td>
-                                    <td><img src="@path" height="200px" width="200px" /></td>
-                                   
-                                    <td>@pr.LibelleFamille</td>
-                                    <td>@foreach(ArticleProduit ar in pr.articleProduits)
-                                        {
-                                            <ul><li>Libelle: @ar.article.LibelleArticle</li>
-                                                
-                                            </ul>
-                                        }
-                                    </td>
-                                   @foreach(ArticleProduit ar in pr.articleProduits)
-                                        {
-                                          <td>@ar.Quantite</td>  
-                                        }
-                                    <td>
-                                        <center>
-                                            <a href="/Produit/EditProduit/@pr.IdProduit" class="text-success">
-                                                <i class="mdi mdi-table-edit
-"></i>
-                                            </a> |
-                                            <a href="/Produit/DeleteProduit/@pr.IdProduit" onclick="return confirm('Voulez-Vous Supprimer?');" class="text-danger"><i class="mdi mdi-delete"></i></a>
-                                        </center>
-                                    </td>
-                                </tr>
-                            }
-                        
+                        </thead>
+                        @foreach (FamilleProduit pr in Model)
+                        {
 
+                            var path = "/ImgProduit/" + pr.Image;
+                            <tr>
+                                <td>@pr.IdProduit</td>
+                                <td>@pr.LibelleProduit</td>
+                                <td>@pr.Prix</td>
+                                <td><img src="@path" height="200px" width="200px" /></td>
+                                <td>@pr.LibelleFamille</td>
+                                <td>
+                                    @foreach (ArticleProduit ar in pr.articleProduits)
+                                    {
+                                        <ul style="list-style-type:none;">
+                                            <li>- @ar.article.LibelleArticle</li>
+                                        </ul>
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (ArticleProduit ar in pr.articleProduits)
+                                    {
+                                        <ul style="list-style-type: none;">
+                                            <li>@ar.Quantite</li>
+                                        </ul>
+                                    }
+                                </td>
+                                <td>
+                                    <center>
+                                        <a href="/Produit/EditProduit/@pr.IdProduit" class="text-success">
+                                            <i class="mdi mdi-table-edit"></i>
+                                        </a> |
+                                        <a href="/Produit/DeleteProduit/@pr.IdProduit" onclick="return confirm('Voulez-Vous Supprimer?');" class="text-danger"><i class="mdi mdi-delete"></i></a>
+                                    </center>
+                                </td>
+                            </tr>
+                        }
                     </table>
                 </div>
             </div>

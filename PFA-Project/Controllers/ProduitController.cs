@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 using PFA_Project.Models;
 using System.Collections.Generic;
 
@@ -27,7 +28,7 @@ namespace PFA_Project.Controllers
             this.logger = logger;
 
         }
-        
+
         public IActionResult ListProduit()
         {
             /*List<Produit> produits = db.Produits.Include(f => f.famille).Include(ap => ap.produitArticles).ThenInclude(a => a.article).ToList();
@@ -69,8 +70,6 @@ namespace PFA_Project.Controllers
 
             return View(familleProduits);
         }
-
-
         public void VerifierCache()
         {
             // verifier si n'existe pas  une cache concernant famille!
@@ -136,23 +135,27 @@ namespace PFA_Project.Controllers
             ViewBag.Articles = new SelectList(articles, "IdArticle", "LibelleArticle");
             return RedirectToAction("ListProduit");
         }
-
         public IActionResult EditProduit(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction("ListProduit");
             }
-            Produit pr = db.Produits.Find(id);
-            pr.produitArticles = db.ArticleProduits.Where(ap => ap.IdProduit == id).ToList();
-            foreach(ArticleProduit ar in pr.produitArticles)
-            {
-                ar.article = db.Articles.Find(ar.IdArticle);
-            }
-            if(pr==null)
-            {
+            Produit? pr = db.Produits.Find(id);
+            if (pr == null)
                 return RedirectToAction("ListProduit");
-            }
+            /**************************/
+            var lst = db.ArticleProduits.Join(db.Articles, ap => ap.IdArticle, a => a.IdArticle, (ap, a) => new { ap, a })
+                .Where(ap => ap.ap.IdProduit == id)
+                .Select(x => new
+                {
+                    id_article = x.ap.IdArticle,
+                    lib_article = x.a.LibelleArticle,
+                    quantite = x.ap.Quantite
+                })
+                .ToList();
+            ViewBag.ProduitArticle = JsonConvert.SerializeObject(lst);
+           
             VerifierCache();
             ViewBag.Familles = new SelectList(famillesCache, "Id", "Libelle");
             List<Article> articles = db.Articles.ToList();
@@ -160,30 +163,53 @@ namespace PFA_Project.Controllers
             return View(pr);
         }
         [HttpPost]
-        public IActionResult EditProduit(Produit produit,ArticleProduit ar)
+        public IActionResult EditProduit(Produit produit, string[] id_articles, string[] quantites)
         {
             if (ModelState.IsValid)
             {
-                string[] allowedExtentions = { ".jpg", ".png", ".jpeg" };
-                string fileExtention = Path.GetExtension(produit.image1.FileName).ToLower();
-                if (allowedExtentions.Contains(fileExtention))
+                var pr = db.Produits.Find(produit.IdProduit);
+
+                if (produit.image1 != null)
                 {
-                    string newName = Guid.NewGuid() + produit.image1.FileName;
-                    string pathName = Path.Combine("wwwroot/ImgProduit", newName);
-                    produit.Image = newName;
-                    using (FileStream stream = System.IO.File.Create(pathName))
+                    string[] allowedExtentions = { ".jpg", ".png", ".jpeg" };
+                    string fileExtention = Path.GetExtension(produit.image1.FileName).ToLower();
+                    if (allowedExtentions.Contains(fileExtention))
                     {
-                        produit.image1.CopyTo(stream);
-                        db.Update(produit);
-                        db.Update(ar);
-                        db.SaveChanges();
+                        string newName = Guid.NewGuid() + produit.image1.FileName;
+                        string pathName = Path.Combine("wwwroot/ImgProduit", newName);
+                        pr.Image = newName;
+                        using (FileStream stream = System.IO.File.Create(pathName))
+                        {
+                            produit.image1.CopyTo(stream);
+                        }
                     }
                 }
+                pr.LibelleProduit = produit.LibelleProduit;
+                pr.Prix = produit.Prix;
+                pr.IdFamille = produit.IdFamille;
+                db.SaveChanges();
+
+                var ArticleProduits = db.ArticleProduits.Where(x => x.IdProduit == produit.IdProduit).ToList();
+                db.ArticleProduits.RemoveRange(ArticleProduits);
+                db.SaveChanges();
+
+                for (int i = 0; i < id_articles.Length; i++)
+                {
+                    db.ArticleProduits.Add(new ArticleProduit()
+                    {
+                        IdProduit = produit.IdProduit,
+                        IdArticle = int.Parse(id_articles[i]),
+                        Quantite = int.Parse(quantites[i])
+                    });
+                    db.SaveChanges();
+                }
             }
+
             VerifierCache();
             ViewBag.Familles = new SelectList(famillesCache, "Id", "Libelle");
             List<Article> articles = db.Articles.ToList();
             ViewBag.Articles = new SelectList(articles, "IdArticle", "LibelleArticle");
+
             return RedirectToAction("ListProduit");
         }
         public IActionResult DeleteProduit(int? id)

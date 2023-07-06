@@ -230,7 +230,7 @@ namespace PFA_Project.Migrations
                     b.Property<string>("Nom")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Statut")
+                    b.Property<bool>("Statut")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
