@@ -11,9 +11,17 @@ namespace PFA_Project.Filters
         }
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if(context.HttpContext.Session.GetString("Login")==null && context.HttpContext.Session.GetString("Role")==role)
+            if(context.HttpContext.Session.GetString("Login")!=null)
             {
-                context.HttpContext.Response.Redirect("Login/Login");
+                if(context.HttpContext.Session.GetString("Role") != role)
+                {
+                    context.HttpContext.Response.Redirect("/Login/Login");
+                }
+                
+            }
+            else
+            {
+                context.HttpContext.Response.Redirect("/Login/Login");
             }
         }
     }

@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using PFA_Project.Filters;
 using PFA_Project.Models;
 using System.Collections.Generic;
 
 
 namespace PFA_Project.Controllers
 {
- 
+    [AuthFilter("admin")]
     public class ProduitController : Controller
     {
         public List<Famille> famillesCache;

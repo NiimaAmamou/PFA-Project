@@ -7,8 +7,8 @@ using System.Reflection.Metadata.Ecma335;
 //test
 namespace PFA_Project.Controllers
 {
+
     [AuthFilter("admin")]
- 
     public class ArticleController : Controller
     {
         public ApplicationContext db;
@@ -17,7 +17,7 @@ namespace PFA_Project.Controllers
         {
             this.db = db;
         }
-      
+       
         public IActionResult ListArticles()
         {
             List<CategorieArticle> articles = db.Categories.Join(db.Articles, a => a.IdCategorie,c=>c.IdCat,(Categorie,Article)=> new {Categorie=Categorie, Article=Article})

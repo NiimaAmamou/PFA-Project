@@ -21,7 +21,7 @@ public class LoginController : Controller
         {
             return View();
         }
-        //Checking if the user is already logged in
+        
         public IActionResult Login()
         {
             
@@ -47,5 +47,10 @@ public class LoginController : Controller
              }
              return View();
          }
+        public IActionResult LogOut() 
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
+        }
     }
 }
