@@ -114,7 +114,7 @@ namespace PFA_Project.Migrations
                     b.Property<DateTime>("Datecmd")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("EmpId")
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Encaisse")
@@ -123,9 +123,14 @@ namespace PFA_Project.Migrations
                     b.Property<string>("Etat")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TableId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("EmpId");
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("TableId");
 
                     b.ToTable("Commandes");
                 });
@@ -275,8 +280,8 @@ namespace PFA_Project.Migrations
                     b.Property<int>("CommandeId")
                         .HasColumnType("int");
 
-                    b.Property<float>("Prix")
-                        .HasColumnType("real");
+                    b.Property<double?>("Prix")
+                        .HasColumnType("float");
 
                     b.Property<int>("ProduitId")
                         .HasColumnType("int");
@@ -372,11 +377,21 @@ namespace PFA_Project.Migrations
 
             modelBuilder.Entity("PFA_Project.Models.Commande", b =>
                 {
-                    b.HasOne("PFA_Project.Models.Employee", "Emp")
+                    b.HasOne("PFA_Project.Models.Employee", "Employee")
                         .WithMany("commandes")
-                        .HasForeignKey("EmpId");
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Emp");
+                    b.HasOne("PFA_Project.Models.Table", "Table")
+                        .WithMany("Commandes")
+                        .HasForeignKey("TableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Table");
                 });
 
             modelBuilder.Entity("PFA_Project.Models.Fourniture", b =>
@@ -463,6 +478,11 @@ namespace PFA_Project.Migrations
                     b.Navigation("lignecommandes");
 
                     b.Navigation("produitArticles");
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Table", b =>
+                {
+                    b.Navigation("Commandes");
                 });
 #pragma warning restore 612, 618
         }

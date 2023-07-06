@@ -12,8 +12,8 @@ using PFA_Project;
 namespace PFA_Project.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230526133804_BD2")]
-    partial class BD2
+    [Migration("20230706230618_Ajtobjetsdanscommande")]
+    partial class Ajtobjetsdanscommande
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -116,36 +116,45 @@ namespace PFA_Project.Migrations
                     b.Property<DateTime>("Datecmd")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Encaisse")
                         .HasColumnType("bit");
 
                     b.Property<string>("Etat")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TableId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("TableId");
 
                     b.ToTable("Commandes");
                 });
 
             modelBuilder.Entity("PFA_Project.Models.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"), 1L, 1);
 
                     b.Property<DateTime>("Date_naissance")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Disponibilite")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Heure_Sup")
+                    b.Property<int?>("Heure_Sup")
                         .HasColumnType("int");
 
                     b.Property<int>("Heure_Travail")
@@ -155,7 +164,7 @@ namespace PFA_Project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NbrExperience")
+                    b.Property<int?>("NbrExperience")
                         .HasColumnType("int");
 
                     b.Property<string>("Nom")
@@ -170,7 +179,7 @@ namespace PFA_Project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("RecetteServ")
+                    b.Property<double?>("RecetteServ")
                         .HasColumnType("float");
 
                     b.Property<string>("Role")
@@ -228,7 +237,7 @@ namespace PFA_Project.Migrations
                     b.Property<string>("Nom")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("Statut")
+                    b.Property<bool>("Statut")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -273,8 +282,8 @@ namespace PFA_Project.Migrations
                     b.Property<int>("CommandeId")
                         .HasColumnType("int");
 
-                    b.Property<float>("Prix")
-                        .HasColumnType("real");
+                    b.Property<double?>("Prix")
+                        .HasColumnType("float");
 
                     b.Property<int>("ProduitId")
                         .HasColumnType("int");
@@ -346,34 +355,6 @@ namespace PFA_Project.Migrations
                     b.ToTable("Tables");
                 });
 
-            modelBuilder.Entity("PFA_Project.Models.Admin", b =>
-                {
-                    b.HasBaseType("PFA_Project.Models.Employee");
-
-                    b.ToTable("Admins", (string)null);
-                });
-
-            modelBuilder.Entity("PFA_Project.Models.Caissier", b =>
-                {
-                    b.HasBaseType("PFA_Project.Models.Employee");
-
-                    b.ToTable("Caissiers", (string)null);
-                });
-
-            modelBuilder.Entity("PFA_Project.Models.Cuisinier", b =>
-                {
-                    b.HasBaseType("PFA_Project.Models.Employee");
-
-                    b.ToTable("Cuisiniers", (string)null);
-                });
-
-            modelBuilder.Entity("PFA_Project.Models.Serveur", b =>
-                {
-                    b.HasBaseType("PFA_Project.Models.Employee");
-
-                    b.ToTable("Serveurs", (string)null);
-                });
-
             modelBuilder.Entity("PFA_Project.Models.Article", b =>
                 {
                     b.HasOne("PFA_Project.Models.Categorie", null)
@@ -394,6 +375,25 @@ namespace PFA_Project.Migrations
                     b.Navigation("article");
 
                     b.Navigation("produit");
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Commande", b =>
+                {
+                    b.HasOne("PFA_Project.Models.Employee", "Employee")
+                        .WithMany("commandes")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PFA_Project.Models.Table", "Table")
+                        .WithMany("Commandes")
+                        .HasForeignKey("TableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Table");
                 });
 
             modelBuilder.Entity("PFA_Project.Models.Fourniture", b =>
@@ -443,42 +443,6 @@ namespace PFA_Project.Migrations
                     b.Navigation("famille");
                 });
 
-            modelBuilder.Entity("PFA_Project.Models.Admin", b =>
-                {
-                    b.HasOne("PFA_Project.Models.Employee", null)
-                        .WithOne()
-                        .HasForeignKey("PFA_Project.Models.Admin", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PFA_Project.Models.Caissier", b =>
-                {
-                    b.HasOne("PFA_Project.Models.Employee", null)
-                        .WithOne()
-                        .HasForeignKey("PFA_Project.Models.Caissier", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PFA_Project.Models.Cuisinier", b =>
-                {
-                    b.HasOne("PFA_Project.Models.Employee", null)
-                        .WithOne()
-                        .HasForeignKey("PFA_Project.Models.Cuisinier", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PFA_Project.Models.Serveur", b =>
-                {
-                    b.HasOne("PFA_Project.Models.Employee", null)
-                        .WithOne()
-                        .HasForeignKey("PFA_Project.Models.Serveur", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("PFA_Project.Models.Article", b =>
                 {
                     b.Navigation("Fournitures");
@@ -496,6 +460,11 @@ namespace PFA_Project.Migrations
                     b.Navigation("lignecommande");
                 });
 
+            modelBuilder.Entity("PFA_Project.Models.Employee", b =>
+                {
+                    b.Navigation("commandes");
+                });
+
             modelBuilder.Entity("PFA_Project.Models.Famille", b =>
                 {
                     b.Navigation("produits");
@@ -511,6 +480,11 @@ namespace PFA_Project.Migrations
                     b.Navigation("lignecommandes");
 
                     b.Navigation("produitArticles");
+                });
+
+            modelBuilder.Entity("PFA_Project.Models.Table", b =>
+                {
+                    b.Navigation("Commandes");
                 });
 #pragma warning restore 612, 618
         }

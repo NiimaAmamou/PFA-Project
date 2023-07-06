@@ -5,10 +5,83 @@
 }
 
 <script>
-    function showalert(){
+    function showalert() {
         alert("Article n'est pas disponible");
     }
-    </script>
+    let oldsmclass = "col-sm-6";
+    let oldlgclass = "col-lg-3";
+    let oldclass = "";
+    let j = 0;
+    function f(val) {
+        //var cntnt = document.getElementById('grid');
+
+        var elmentscount = val.value;
+        var bootstrapclass = 12 / parseInt(elmentscount);
+
+        console.log("oldclass = " + oldclass);
+        console.log("newclass = " + "col-" + bootstrapclass);
+
+        oldclass = "col-" + bootstrapclass;
+        //$("#grid").html('');
+
+        var productsitems = document.getElementsByClassName("all");
+        for (var i = 0; i < productsitems.length; i++) {
+            if (j == 0) {
+                productsitems[i].classList.remove(oldsmclass);
+                productsitems[i].classList.remove(oldlgclass);
+            } else {
+                productsitems[i].classList.remove(oldclass);
+            }
+            //$("#grid").append(productsitems[i]);
+            productsitems[i].classList.add('col-' + bootstrapclass);
+        }
+        //setnbrelments(elmentscount);
+        console.log("contenu Length=" + productsitems.length);
+        j++;
+    }
+    function productsselected() {
+        var prods = "";
+        var qnts = "";
+        let i = 0;
+        for (let i = 0; i < produits.length; i++) {
+            if (i == 0) {
+                prods = produits[i].idproduit;
+                qnts = produits[i].quantite;
+            } else {
+                prods += ',' + produits[i].idproduit;
+                qnts += ',' + produits[i].quantite;
+            }
+            i++;
+        }
+        return { prods: prods, qnts: qnts };
+    }
+    function validercmd() {
+        var valtable = document.querySelector('input[name="table"]:checked').value;
+        var valserver = document.querySelector('input[name="server"]:checked').value;
+        var prods = productsselected();
+        console.log("" + JSON.stringify(prods));
+        var cmdData = { table: valtable, server: valserver, produits: prods.prods, qnts: prods.qnts };
+        console.log("" + JSON.stringify(cmdData));
+        $.ajax({
+            url: '/api/MisAPI',
+            type: 'Post',
+            contentType: 'application/json',
+            data: JSON.stringify(cmdData),
+            success: function (data) {
+                console.log("cmd = " + JSON.stringify(data));
+                if (data.r == "Oui") {
+                    console.log("cmd = " + JSON.stringify(data));
+                    console.log('Command created successfully');
+                    $('.cart-dialog--active').removeClass('cart-dialog--active');
+                    document.getElementById("moncard").style.visibility = "hidden";
+                    produits = [];
+                    alert("Commande Bien Passer");
+                }
+            }
+        });
+        console.log(produits);
+    }
+</script>
 <!-- Custom styles for this template -->
 <link href="~/menu/css/style.css" rel="stylesheet" />
 <link rel="stylesheet" href="/css/stylecart.css" />
@@ -23,6 +96,10 @@
                                 Menu
                             </h2>
                         </div>
+                        <br />
+                        <br />
+                        <select class="form-control" onchange="f(this);" asp-items="@ViewBag.items"></select>
+                        <br />
                         <ul class="filters_menu">
                             <li class="active" data-filter="*">All</li>
                             @foreach (var listf in ViewBag.familles)
@@ -34,12 +111,12 @@
                             @{
                                 bool dispo = true;
                             }
-                            <div class="row grid">
+                            <div class="row grid" id="grid">
                                 @foreach (FamilleProduit fa in Model)
-                                { 
+                                {
                                     @foreach (Article a in fa.articles)
                                     {
-                                        if (a.QteStock==0)
+                                        if (a.QteStock == 0)
                                         {
                                             dispo = false;
                                             break;
@@ -60,7 +137,7 @@
                                                         <h6 id="prixproduit_@fa.IdProduit">
                                                             @fa.Prix DH
                                                         </h6>
-                                                        @if(dispo==false)
+                                                        @if (dispo == false)
                                                         {
                                                             <a onclick="showalert();">
                                                                 <i class="fa fa-check-circle" aria-hidden="false"></i>
@@ -72,7 +149,7 @@
                                                                 <i class="fa fa-check-circle" aria-hidden="false"></i>
                                                             </a>
                                                         }
-                                                       
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -88,73 +165,63 @@
     </div>
 </div>
 <form method="post" action="/Commande/AjouterCommande">
-<aside id="moncard" class="cart-menu"style="visibility:hidden">
-    <!--bloquer la page de ne pas reloader -->
-    <a id="cart-button" class="button" href="javascript:void(0)" style="opacity: 1;">
-        <span>Commandes</span>
-        <b id="cpt">(0)</b>
-    </a>
-    <div class="cart-dialog">
-        <div class="widget woocommerce widget_shopping_cart">
-            <h2 class="widgettitle">Cart</h2>
-            <div class="widget_shopping_cart_content" style="opacity: 1;">
-                
-                <ul id="contentul"class="woocommerce-mini-cart cart_list product_list_widget ">
-                   
-                </ul>
+    <aside id="moncard" class="cart-menu" style="visibility:hidden">
+        <!--bloquer la page de ne pas reloader -->
+        <a id="cart-button" class="button" href="javascript:void(0)" style="opacity: 1;">
+            <span>Commandes</span>
+            <b id="cpt">(0)</b>
+        </a>
+        <div class="cart-dialog">
+            <div class="widget woocommerce widget_shopping_cart">
+                <h2 class="widgettitle">Cart</h2>
+                <div class="widget_shopping_cart_content" style="opacity: 1;">
+                    <ul id="contentul" class="woocommerce-mini-cart cart_list product_list_widget ">
+                    </ul>
 
-                <p class="woocommerce-mini-cart__total total">
-                    <strong>Total Commande:</strong>
-                    <span class="woocommerce-Price-amount amount">
+                    <p class="woocommerce-mini-cart__total total">
+                        <strong>Total Commande:</strong>
+                        <span class="woocommerce-Price-amount amount">
 
-                    <span id="total">0</span> 
-                    <span class="woocommerce-Price-currencySymbol">DH
-                </span>
-                    </span>
-                </p>
-                <p class="woocommerce-mini-cart__buttons buttons">
-                        <button type="submit" class="button checkout wc-forward btn btn-info btn-fw"> Valider</button>
-                </p>
+                            <span id="total">0</span>
+                            <span class="woocommerce-Price-currencySymbol">
+                                DH
+                            </span>
+                        </span>
+                    </p>
+                    <p class="woocommerce-mini-cart__buttons buttons">
+                        <button type="button" onclick="validercmd();" class="button checkout wc-forward btn btn-info btn-fw"> Valider</button>
+                    </p>
                     <hr />
                     @{
                         List<Employee> employees = (List<Employee>)(ViewBag.Serveurs);
+                        List<Table> tables = (List<Table>)(ViewBag.Tables);
                     }
-                    <ul>
+                    <ul class="">
+                        @{
+                            int i = 0;
+                        }
                         @foreach (Employee em in employees)
                         {
-                            <li> @em.Nom @em.Prenom</li>
-                            
+                            <li><input type="radio" name="server" value="@em.Id" @(i == 0 ? "checked" : "") /> Serveur @em.Nom @em.Prenom</li>
+                            i++;
+                        }
+                    </ul>
+                    <ul class="">
+                        @{
+                            i = 0;
+                        }
+                        @foreach (var item in tables)
+                        {
+                            <li><input type="radio" name="table" value="@item.Id" @(i == 0 ? "checked" : "") /> table @item.NumTable</li>
+                            i++;
                         }
                     </ul>
                 </div>
+            </div>
         </div>
-    </div>
-
-</aside>
+    </aside>
 </form>
-<div class="modal" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
 
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title text-warning"><i class="fa fa-exclamation-triangle"></i> Attention</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-                Article n'est pas disponible
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-
-        </div>
-    </div>
-</div>
 <script>
     //optimiser sidebar
     document.body.classList.add("sidebar-icon-only");

@@ -33,6 +33,8 @@ namespace PFA_Project.Controllers
         {
             //la liste des serveurs dans la carde
             ViewBag.Serveurs = db.Employees.Where(e => e.Role == "Serveur" && e.Disponibilite == true).ToList();
+            ViewBag.Tables = db.Tables.Where(x => x.EtatTable == "Disponible").ToList();
+
             VerifierCache();
             ViewBag.familles = famillesCache;
             List<FamilleProduit> produits = famillesCache.Join(db.Produits, p => p.Id, f => f.IdFamille, (Famille, Produit) => new { Famille = Famille, Produit = Produit })

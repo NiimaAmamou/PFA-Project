@@ -14,7 +14,7 @@ namespace PFA_Project.Models
       
         public int CommandeId { get; set; }
         public int? Quantite { get; set; }
-        public float Prix { get; set; }
+        public double? Prix { get; set; }
        
     }
 }
