@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using PFA_Project.Filters;
 using PFA_Project.Models;
 
 namespace PFA_Project.Controllers
 {
-    [Authorize]
+    [AuthFilter("Caissier")]
     public class TableController : Controller
     {
         public ApplicationContext db;

@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using PFA_Project.Filters;
 using PFA_Project.Models;
 
 namespace PFA_Project.Controllers
 {
-    [Authorize]
+    [AuthFilter("Serveur")]
     public class CommandeController : Controller
     {
         public ApplicationContext db;

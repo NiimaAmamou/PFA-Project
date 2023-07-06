@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using PFA_Project.Filters;
 using PFA_Project.Models;
 using System.Data;
 
 namespace PFA_Project.Controllers
 {
+    [AuthFilter("admin")]
     public class EmployeeController : Controller
     {
         public ApplicationContext db;

@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using PFA_Project.Filters;
 using PFA_Project.Models;
 using PFA_Project.ModelViews;
 
 namespace PFA_Project.Controllers
 {
-    [Authorize]
+    [AuthFilter("admin")]
     public class FournituresController : Controller
     {
         public ApplicationContext db;
