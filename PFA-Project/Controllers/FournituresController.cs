@@ -9,6 +9,7 @@ using PFA_Project.ModelViews;
 namespace PFA_Project.Controllers
 {
     [AuthFilter("admin")]
+
     public class FournituresController : Controller
     {
         public ApplicationContext db;
