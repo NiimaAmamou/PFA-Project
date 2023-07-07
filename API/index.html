@@ -20,64 +20,146 @@
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
-    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="style.css" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+
+    </style>
 </head>
 <body>
-
-    <script>
-        function GetAllProduits() {
-            //Juste pour loading
-            $("#contenu").html('<tr><td colspan="5">Loading...</td></tr>');
-            $.ajax({
-                url: 'https://localhost:7053/api/MisAPI', // Controller/Action
-                type: 'GET', // HTTP method (GET or POST)
-                dataType: 'json', // Les informations retournés sous format JSON
-                success: function (data) {
-                   
-                    // Données retournées sont stockés au parametre data!
-                    if (data.r == "Oui") {
-                        console.log("Affichage"+JSON.stringify(data));
-                        //Juste pour afficher au niveau déboguage ;
-                        //Vider tbody(peut être il n'est pas vide)
-                        $("#contenu").html('');
-                        //affichage de famille une seule fois 
-                        let famille="";
-                        for (let i = 0; i < data.produits.length; i++) {
-                            if(famille!=data.produits[i].libelleFamille)
-                            {
-                                $("#contenu").append(
-                                '<div class="row">' +
-                                '<div class="col-md-12">'+
-                                '<h4 class="text-center ftco-animate">'+data.produits[i].libelleFamille+'</h4>'+
-                                '</div>'+
-                                '</div>'+
-                                '<div class="row">');
+<script>
+    function GetAllProduits() {
+        $.ajax({
+            url: 'https://localhost:7053/api/MisAPI', // Controller/Action
+            type: 'GET', // HTTP method (GET or POST)
+            dataType: 'json', // Les informations retournés sous format JSON
+            success: function (data) {
+                // Données retournées sont stockés au parametre data!
+                if (data.r == "Oui") {
+                    let famille = "";
+                    let str = "";
+                    for (let i = 0; i < data.produits.length; i++) {
+                        if (famille != data.produits[i].libelleFamille) {
+                            if (i != 0) {
+                                str += '</div>';
                             }
-                            famille=data.produits[i].libelleFamille;
-                            $("#contenu").append(
-                                '<div class="col-md-6">'+
-                                    '   <div class="pricing-entry d-flex ftco-animate">'+
-                                    '<div class="desc pl-3">'+
-                                    ' <div class="d-flex text align-items-center">'+
-                                    '  <h3><input type="checkbox"/>&nbsp;<span>'+data.produits[i].libelleProduit+'</span></h3>'+
-                                    '   <span class="price">'+data.produits[i].prix+' DH</span>'+
-                                    '   </div>'+
-                                    '   </div>'+
-                                    '   </div>');
-                            
-                                   
+                            str += '<div class="row">';
+                            str += '<div class="col-md-12">';
+                            str += '<h4 class="text-center ftco-animate">' + data.produits[i].libelleFamille + '</h4>';
+                            str += '</div>';
+                            str += '</div>';
+                            str += '<div class="row">';
                         }
-                       
+                        famille = data.produits[i].libelleFamille;
+                        str += '<div class="col-md-6">';
+                        str += '<div class="pricing-entry d-flex ftco-animate">';
+                        str += '<div class="desc pl-3">';
+                        str += '<div class="d-flex text align-items-center">';
+                        str += '<h3>';
+                        str += '<input type="checkbox" value="' + data.produits[i].idProduit + '" />&nbsp;<span>' + data.produits[i].libelleProduit + '</span></h3>';
+                        str += '<span class="price">' + data.produits[i].prix + ' DH *&nbsp;&nbsp;</span>';
+                        /***************/
+                        str += '<input type="number" id="qnt_' + data.produits[i].idProduit + '" class="text-center" style="width: 3rem;" min="1" step="1" value="1">';
+                        /***************/
+                        str += '</div>';
+                        str += '</div>';
+                        str += '</div>';
+                        str += '</div>';
+                    }
+                    $("#cnt").html(str);
+                }
+            }
+        });
+    }
+    GetAllProduits();
+    function GetAllServers() {
+        $.ajax({
+            url: 'https://localhost:7053/api/MisAPI/servers', // Controller/Action
+            type: 'GET', // HTTP method (GET or POST)
+            dataType: 'json', // Les informations retournés sous format JSON
+            success: function (data) {
+                if (data.r == "Oui") {
+                    $("#srv").html('');
+                    for (let i = 0; i < data.servers.length; i++) {
+                        $("#srv").append(
+                            '<input type="radio" name="server" value="' + data.servers[i].id + '" ' + (i == 0 ? 'checked' : '') + '/> '
+                            + data.servers[i].nom + ' ' + data.servers[i].prenom + '<br /> '
+                        );
                     }
                 }
-            });
-        }
-        GetAllProduits();
-        </script>
+            }
+        });
+    }
+    function GetAllDispTables() {
+        $.ajax({
+            url: 'https://localhost:7053/api/MisAPI/tables', // Controller/Action
+            type: 'GET', // HTTP method (GET or POST)
+            dataType: 'json', // Les informations retournés sous format JSON
+            success: function (data) {
+                if (data.r == "Oui") {
+                    $("#table").html('');
+                    for (let i = 0; i < data.tables.length; i++) {
+                        $("#table").append(
+                            '<input type="radio" name="table" value="' + data.tables[i].id + '" ' + (i == 0 ? 'checked' : '') + '/> '
+                            + ' Table ' + data.tables[i].numTable + '<br /> '
+                        );
+                    }
+                }
+            }
+        });
+    }
+    function validercmd() {
+        GetAllServers();
+        GetAllDispTables();
+        $("#validatcmd").modal("show");
+    }
+    function savecmd() {
+        var valtable = document.querySelector('input[name="table"]:checked').value;
+        var valserver = document.querySelector('input[name="server"]:checked').value;
+        var prods = productsselected();
+        console.log("" + JSON.stringify(prods));
+        var cmdData = {table: valtable, server: valserver, produits: prods.prods, qnts: prods.qnts};
+        console.log("" + JSON.stringify(cmdData));
+        $.ajax({
+            url: 'https://localhost:7053/api/MisAPI',
+            type: 'Post',
+            contentType: 'application/json',
+            data: JSON.stringify(cmdData),
+            success: function (data) {
+                console.log("cmd = " + JSON.stringify(data));
+                if (data.r == "Oui") {
+                   // console.log("cmd = " + JSON.stringify(data));
+                  //  console.log('Commande created successfully');
+                    $("#validatcmd").modal("hide");
+                alert("Commande passée avec succes");
+                }
+            }
+        });
+    }
+    function productsselected() {
+        //chk1
+        //ch2
+        //ch3
+        var products = $('input[type="checkbox"]:checked');
+        var prods = "";
+        var qnts = "";
+        let i = 0;
+        products.each(function () {
+            if (i == 0) {
+                prods = $(this).val();
+                qnts = $("#qnt_" + $(this).val()).val();
+            } else {
+                prods += ',' + $(this).val();
+                qnts += ',' + $("#qnt_" + $(this).val()).val();
+            }
+            i++;
+        });
+        return {prods: prods, qnts: qnts};
+    }
+</script>
 <div class="fixed">
-    <a href="javascript:void(0)" class="button ">
+    <a href="javascript:validercmd()" class="button ">
         <div class="buttonDiv bg-b-orange">
-            Valider <b>(0)</b>
+            Valider
         </div>
     </a>
 </div>
@@ -89,124 +171,53 @@
                 <p class="flip"><span class="deg1"></span><span class="deg2"></span><span class="deg3"></span></p>
             </div>
         </div>
-        <div id="contenu">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="pricing-entry d-flex ftco-animate">
-                    <div class="img" style="background-image: url(images/pizza-1.jpg);"></div>
-                    <div class="desc pl-3">
-                        <div class="d-flex text align-items-center">
-                            <h3><input type="checkbox"/>&nbsp;<span>Italian Pizza</span></h3>
-                            <span class="price">$20.00</span>
-                        </div>
-                        <div class="d-block">
-                            <p>A small river named Duden flows by their place and supplies</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="pricing-entry d-flex ftco-animate">
-                    <div class="img" style="background-image: url(images/pizza-1.jpg);"></div>
-                    <div class="desc pl-3">
-                        <div class="d-flex text align-items-center">
-                            <h3><input type="checkbox"/>&nbsp;<span>Italian Pizza</span></h3>
-                            <span class="price">$20.00</span>
-                        </div>
-                        <div class="d-block">
-                            <p>A small river named Duden flows by their place and supplies</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="pricing-entry d-flex ftco-animate">
-                    <div class="img" style="background-image: url(images/pizza-1.jpg);"></div>
-                    <div class="desc pl-3">
-                        <div class="d-flex text align-items-center">
-                            <h3><input type="checkbox"/>&nbsp;<span>Italian Pizza</span></h3>
-                            <span class="price">$20.00</span>
-                        </div>
-                        <div class="d-block">
-                            <p>A small river named Duden flows by their place and supplies</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="pricing-entry d-flex ftco-animate">
-                    <div class="img" style="background-image: url(images/pizza-1.jpg);"></div>
-                    <div class="desc pl-3">
-                        <div class="d-flex text align-items-center">
-                            <h3><input type="checkbox"/>&nbsp;<span>Italian Pizza</span></h3>
-                            <span class="price">$20.00</span>
-                        </div>
-                        <div class="d-block">
-                            <p>A small river named Duden flows by their place and supplies</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="pricing-entry d-flex ftco-animate">
-                    <div class="img" style="background-image: url(images/pizza-1.jpg);"></div>
-                    <div class="desc pl-3">
-                        <div class="d-flex text align-items-center">
-                            <h3><input type="checkbox"/>&nbsp;<span>Italian Pizza</span></h3>
-                            <span class="price">$20.00</span>
-                        </div>
-                        <div class="d-block">
-                            <p>A small river named Duden flows by their place and supplies</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="pricing-entry d-flex ftco-animate">
-                    <div class="img" style="background-image: url(images/pizza-1.jpg);"></div>
-                    <div class="desc pl-3">
-                        <div class="d-flex text align-items-center">
-                            <h3><input type="checkbox"/>&nbsp;<span>Italian Pizza</span></h3>
-                            <span class="price">$20.00</span>
-                        </div>
-                        <div class="d-block">
-                            <p>A small river named Duden flows by their place and supplies</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="pricing-entry d-flex ftco-animate">
-                    <div class="img" style="background-image: url(images/pizza-1.jpg);"></div>
-                    <div class="desc pl-3">
-                        <div class="d-flex text align-items-center">
-                            <h3><input type="checkbox"/>&nbsp;<span>Italian Pizza</span></h3>
-                            <span class="price">$20.00</span>
-                        </div>
-                        <div class="d-block">
-                            <p>A small river named Duden flows by their place and supplies</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="pricing-entry d-flex ftco-animate">
-                    <div class="img" style="background-image: url(images/pizza-1.jpg);"></div>
-                    <div class="desc pl-3">
-                        <div class="d-flex text align-items-center">
-                            <h3><input type="checkbox"/>&nbsp;<span>Italian Pizza</span></h3>
-                            <span class="price">$20.00</span>
-                        </div>
-                        <div class="d-block">
-                            <p>A small river named Duden flows by their place and supplies</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div id="cnt">
+
         </div>
-        </div>
+    </div>
 </section>
 
+<!-- The Modal -->
+<div class="modal fade" id="validatcmd">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title text-dark">Choix De Serveur et Table</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Serveur</label><br/>
+                            <div id="srv">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Table</label><br/>
+                            <div id="table">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="savecmd();">Commander</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery-migrate-3.0.1.min.js"></script>
 <script src="js/popper.min.js"></script>

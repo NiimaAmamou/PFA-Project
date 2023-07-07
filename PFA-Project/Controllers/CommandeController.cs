@@ -1,38 +1,27 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PFA_Project.Filters;
 using PFA_Project.Models;
 
 namespace PFA_Project.Controllers
 {
-    [AuthFilter("Serveur")]
+   /* [AuthFilter("Serveur")]
+    [AuthFilter("Caissier")]
+    [AuthFilter("Admin")]*/
     public class CommandeController : Controller
     {
         public ApplicationContext db;
         public CommandeController(ApplicationContext db)
         {
-            this.db = db;  
+            this.db = db;
         }
-        [HttpPost]
-        public IActionResult AjouterCommande(string[] idproduit, string[] quantite, string[]prix)
+        public IActionResult ListCommandes()
         {
-            Commande c = new Commande() { Datecmd = DateTime.Now, Encaisse = false, Etat = "En Cours" };
-            db.Commandes.Add(c);
-            db.SaveChanges();
-                    for (int i = 0; i < idproduit.Length; i++)
-                        {
-                db.LigneCommande.Add(new LigneCommande()
-                {
-                    CommandeId = c.Id,
-                    ProduitId = int.Parse(idproduit[i]),
-                    Quantite = int.Parse(quantite[i]),
-                    Prix = float.Parse(prix[i]),
-                }) ; 
-                            db.SaveChanges();
-
-                        }
-                        return RedirectToAction("Index","Home");
-                    }
-                }
-            }
+            ViewBag.produits = db.Produits.ToList();
+            List<Commande> lists = db.Commandes.Include(c => c.lignecommande).Include(t => t.Table).Include(s => s.Employee).ToList();
+            return View(lists);
+        }
+    }
+}

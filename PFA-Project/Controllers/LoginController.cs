@@ -32,7 +32,7 @@ public class LoginController : Controller
          {
              if(ModelState.IsValid)
              {
-                 Employee a = db.Employees.Where(a => a.Login.Equals(e.Login) && a.Password.Equals(e.Password)).FirstOrDefault();
+                Employee a = db.Employees.Where(a => a.Login.ToLower().Equals(e.Login.ToLower()) && a.Password.Equals(e.Password)).FirstOrDefault();
                  if(a!=null)
                     { 
                     HttpContext.Session.SetString("Login", a.Login);
