@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace PFA_Project.Controllers
 {
-    [AuthFilter("admin")]
+  [AuthFilter("admin")]
     public class ProduitController : Controller
     {
         public List<Famille> famillesCache;

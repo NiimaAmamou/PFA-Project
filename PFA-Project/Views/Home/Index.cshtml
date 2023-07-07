@@ -1,44 +1,11 @@
 ﻿@model List<FamilleProduit>
 
-@{
-    ViewData["Title"] = "Menu";
-}
 
 <script>
     function showalert() {
         alert("Article n'est pas disponible");
     }
-    let oldsmclass = "col-sm-6";
-    let oldlgclass = "col-lg-3";
-    let oldclass = "";
-    let j = 0;
-    function f(val) {
-        //var cntnt = document.getElementById('grid');
 
-        var elmentscount = val.value;
-        var bootstrapclass = 12 / parseInt(elmentscount);
-
-        console.log("oldclass = " + oldclass);
-        console.log("newclass = " + "col-" + bootstrapclass);
-
-        oldclass = "col-" + bootstrapclass;
-        //$("#grid").html('');
-
-        var productsitems = document.getElementsByClassName("all");
-        for (var i = 0; i < productsitems.length; i++) {
-            if (j == 0) {
-                productsitems[i].classList.remove(oldsmclass);
-                productsitems[i].classList.remove(oldlgclass);
-            } else {
-                productsitems[i].classList.remove(oldclass);
-            }
-            //$("#grid").append(productsitems[i]);
-            productsitems[i].classList.add('col-' + bootstrapclass);
-        }
-        //setnbrelments(elmentscount);
-        console.log("contenu Length=" + productsitems.length);
-        j++;
-    }
     function productsselected() {
         var prods = "";
         var qnts = "";
@@ -53,33 +20,33 @@
             }
             i++;
         }
-        return { prods: prods, qnts: qnts };
+        return { prods: prods.toString(), qnts: qnts.toString() };
     }
     function validercmd() {
         var valtable = document.querySelector('input[name="table"]:checked').value;
         var valserver = document.querySelector('input[name="server"]:checked').value;
         var prods = productsselected();
-        console.log("" + JSON.stringify(prods));
+       // console.log("" + JSON.stringify(prods));
         var cmdData = { table: valtable, server: valserver, produits: prods.prods, qnts: prods.qnts };
-        console.log("" + JSON.stringify(cmdData));
+        //console.log("" + JSON.stringify(cmdData));
         $.ajax({
             url: '/api/MisAPI',
             type: 'Post',
             contentType: 'application/json',
             data: JSON.stringify(cmdData),
             success: function (data) {
-                console.log("cmd = " + JSON.stringify(data));
+                //console.log("cmd = " + JSON.stringify(data));
                 if (data.r == "Oui") {
-                    console.log("cmd = " + JSON.stringify(data));
+                   // console.log("cmd = " + JSON.stringify(data));
                     console.log('Command created successfully');
                     $('.cart-dialog--active').removeClass('cart-dialog--active');
                     document.getElementById("moncard").style.visibility = "hidden";
                     produits = [];
-                    alert("Commande Bien Passer");
+                    alert("Commande success");
                 }
             }
         });
-        console.log(produits);
+        //console.log(produits);
     }
 </script>
 <!-- Custom styles for this template -->
@@ -98,13 +65,46 @@
                         </div>
                         <br />
                         <br />
-                        <select class="form-control" onchange="f(this);" asp-items="@ViewBag.items"></select>
+                        <div class="row">
+                            <div class="col-md-6">
+                                @{
+                                    List<Employee> employees = (List<Employee>)(ViewBag.Serveurs);
+                                    List<Table> tables = (List<Table>)(ViewBag.Tables);
+                                }
+                                <h5>Serveurs</h5>
+                                <ul style="list-style: none;">
+                                    @{
+                                        int i = 0;
+                                    }
+                                    @foreach (Employee em in employees)
+                                    {
+                                        <li><input type="radio" name="server" value="@em.Id" @(i == 0 ? "checked" : "") /> Serveur @em.Nom @em.Prenom</li>
+                                        i++;
+                                    }
+                                </ul>
+
+                            </div>
+                            <div class="col-md-6" style="text-align:right">
+                                <h5 style=" ">Tables</h5>
+                                <ul style="text-align:right;list-style: none;">
+                                    @{
+                                        i = 0;
+                                    }
+                                    @foreach (var item in tables)
+                                    {
+                                        <li><input type="radio" name="table" value="@item.Id" @(i == 0 ? "checked" : "") /> table @item.NumTable</li>
+                                        i++;
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <hr />
                         <br />
                         <ul class="filters_menu">
                             <li class="active" data-filter="*">All</li>
                             @foreach (var listf in ViewBag.familles)
                             {
-                                <li data-filter=".@listf.Libelle.ToLower()">@listf.Libelle</li>
+                                <li data-filter=".@listf.Libelle.Replace(" ","_").ToLower()">@listf.Libelle</li>
                             }
                         </ul>
                         <div class="filters-content">
@@ -123,7 +123,7 @@
                                         }
 
                                     }
-                                    <div class="col-sm-6 col-lg-3 all @fa.LibelleFamille.ToLower()">
+                                    <div class="col-sm-6 col-lg-3 all @fa.LibelleFamille.Replace(" "," _").ToLower()">
                                         <div class="box">
                                             <div>
                                                 <div class="img-box">
@@ -191,7 +191,7 @@
                     <p class="woocommerce-mini-cart__buttons buttons">
                         <button type="button" onclick="validercmd();" class="button checkout wc-forward btn btn-info btn-fw"> Valider</button>
                     </p>
-                    <hr />
+                   @* <hr />
                     @{
                         List<Employee> employees = (List<Employee>)(ViewBag.Serveurs);
                         List<Table> tables = (List<Table>)(ViewBag.Tables);
@@ -215,7 +215,7 @@
                             <li><input type="radio" name="table" value="@item.Id" @(i == 0 ? "checked" : "") /> table @item.NumTable</li>
                             i++;
                         }
-                    </ul>
+                    </ul>*@
                 </div>
             </div>
         </div>
