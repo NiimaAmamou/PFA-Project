@@ -6,7 +6,7 @@ using System.Data;
 
 namespace PFA_Project.Controllers
 {
-    [AuthFilter("admin")]
+    [AuthFilter("Admin")]
     public class EmployeeController : Controller
     {
         public ApplicationContext db;

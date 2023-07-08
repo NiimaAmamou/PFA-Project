@@ -8,7 +8,7 @@ using System.Reflection.Metadata.Ecma335;
 namespace PFA_Project.Controllers
 {
 
-    [AuthFilter("admin")]
+    [AuthFilter("Admin")]
     public class ArticleController : Controller
     {
         public ApplicationContext db;

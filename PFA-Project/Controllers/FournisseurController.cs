@@ -5,7 +5,7 @@ using PFA_Project.Models;
 
 namespace PFA_Project.Controllers
 {
-    [AuthFilter("admin")]
+    [AuthFilter("Admin")]
     public class FournisseurController : Controller
     {
         public ApplicationContext db;

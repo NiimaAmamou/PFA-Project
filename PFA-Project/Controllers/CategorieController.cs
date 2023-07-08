@@ -5,7 +5,7 @@ using PFA_Project.Models;
 
 namespace PFA_Project.Controllers
 {
-    [AuthFilter("Caissier")]
+    [AuthFilter("Admin")]
     public class CategorieController : Controller
     {
         public ApplicationContext db;

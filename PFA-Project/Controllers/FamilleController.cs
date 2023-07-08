@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace PFA_Project.Controllers
 {
-    [AuthFilter("admin")]
+    [AuthFilter("Admin")]
     public class FamilleController : Controller
     {
         public ApplicationContext db;

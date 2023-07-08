@@ -8,7 +8,7 @@ using PFA_Project.ModelViews;
 
 namespace PFA_Project.Controllers
 {
-    [AuthFilter("admin")]
+    [AuthFilter("Admin")]
 
     public class FournituresController : Controller
     {
